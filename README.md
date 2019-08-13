@@ -54,13 +54,20 @@ Neo4j does not support binary data as values.
 It is recommended to story binary values in a separate storage.
 
 [Neo4j Properties](https://neo4j.com/docs/java-reference/current/javadocs/org/neo4j/graphdb/PropertyContainer.html)
-```cypher
+```text
 Properties are key-value pairs. The keys are always strings. Valid property value types are
 all the Java primitives (int, byte, float, etc), java.lang.Strings, the Spatial and Temporal types
 and arrays of any of these.
 
  Please note that Neo4j does NOT accept arbitrary objects as property values.
  setProperty() takes a java.lang.Object only to avoid an explosion of overloaded setProperty() methods.
+```
+
+[Worst Practices for BLOBs in Neo4j](https://neo4j.com/blog/dark-side-neo4j-worst-practices/)
+```text
+Using BLOB data in Neo4j is one of the very few real anti-patterns for graph databases, in my opinion.
+If you have to deal with BLOB data, choose an appropriate store for that use case and use Neo4j
+to store the URL that points you to the binary data.
 ```
 
 ## Dgraph
@@ -141,6 +148,18 @@ Result:
     ]
   }
 ```
+
+### Store binary values
+
+[Storing blobs in Dgraph](https://discuss.dgraph.io/t/storing-blobs-in-dgraph/1927)
+```text
+Binary blobs aren’t supported right now (although I think it’s a good idea to in the future).
+As a work around though, you could always do something like Base 64 encoding in a string.
+
+There are some (arbitrary) hardcoded limits in badger for value sizes (2GB). These are in place for technical reasons
+to aid recovery when the data directory in case the data directory becomes corrupted for some reason.
+```
+
 ### Run Dgraph locally
 
 ```bash
