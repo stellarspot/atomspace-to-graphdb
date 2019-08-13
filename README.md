@@ -5,6 +5,19 @@ Questions for GraphDB:
 1. Simple query: What does Alice like?
 1. Store binary values
 
+
+## GraphDB comparison table
+
+
+| GraphDB | Data Model|
+|---------|-----------|
+| Neo4j   | Property  |
+| Dgraph  | RDF       |
+
+
+RDF -  Resource Description Framework
+
+
 ## Neo4j
 
 Docs:
