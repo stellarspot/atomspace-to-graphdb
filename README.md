@@ -3,20 +3,20 @@
 Questions for GraphDB:
 1. Store unique nodes
 1. Simple query: What does Alice like?
+1. Store Atomese atoms
 1. Store binary values
-
 
 ## GraphDB comparison table
 
+| GraphDB  | Data Model|
+|----------|-----------|
+| AtomSpace| Hypergraph|
+| Neo4j    | Property  |
+| Dgraph   | RDF       |
 
-| GraphDB | Data Model|
-|---------|-----------|
-| Neo4j   | Property  |
-| Dgraph  | RDF       |
 
-
-RDF -  Resource Description Framework
-
+Atomspace is hypergraph GraphDB where edge (link in Atomspace) can join any number of edges (nodes).
+RDF - Resource Description Framework
 
 ## Neo4j
 
@@ -46,6 +46,27 @@ CREATE (alice)-[:DISLIKES]->(:pear)
 CREATE (bob:Bob)-[:LIKES]->(:apple)
 
 MATCH (:Alice)-[:LIKES]->(what) RETURN what;
+```
+## Store Atomese atoms
+
+
+Sample: Alice likes ice-cream:
+
+Atomese:
+```text
+EvaluationLink
+    PredicateNode "likes"
+    ListLink
+        ConceptNode "Alice"
+        ConceptNode "ice-cream"
+```
+
+Property graph:
+```cypher
+CREATE (el:EvaluationLink)-[:LINK {index: "0"}]->(:PredicateNode {name: "likes"})
+CREATE (el)-[:LINK {index: "1"}]->(ll:ListLink)
+CREATE (ll)-[:LINK {index: "0"}]->(:ConceptNode {name: "Alice"})
+CREATE (ll)-[:LINK {index: "1"}]->(:ConceptNode {name: "ice-cream"})
 ```
 
 ### Store binary values
