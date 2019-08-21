@@ -120,7 +120,7 @@ Docs:
 
 Two nodes are stored
 
-###
+### Simple query: What does Alice like?
 
 ```
  {
