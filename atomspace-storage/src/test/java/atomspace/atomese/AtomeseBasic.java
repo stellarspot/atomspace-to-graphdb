@@ -1,6 +1,7 @@
 package atomspace.atomese;
 
-import static atomspace.atomese.Atomese.*;
+import static atomspace.atomese.Atomese.Link;
+import static atomspace.atomese.Atomese.Node;
 
 public class AtomeseBasic {
 
@@ -10,5 +11,9 @@ public class AtomeseBasic {
 
     public static Link Inheritance(Atom... atoms) {
         return Link("Inheritance", atoms);
+    }
+
+    public static Link List(Atom... atoms) {
+        return Link("List", atoms);
     }
 }
