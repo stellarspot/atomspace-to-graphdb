@@ -1,20 +1,19 @@
 package atomspace.performance.generator;
 
 import atomspace.performance.DBAtom;
-import atomspace.performance.DBLink;
-import atomspace.performance.DBNode;
+import atomspace.performance.DBAtomSpace;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBAtomsTriplesGenerator implements DBAtomsGenerator {
 
 
     public final TripleGraph tripleGraph;
 
+    private final DBAtomSpace atomspace = new DBAtomSpace();
     private final List<DBAtom> atoms = new ArrayList<>();
     private final List<Triple> triples = new ArrayList<>();
-
-    private long id = 0;
 
     private static final String TYPE_EVALUATION = "EvaluationLink";
     private static final String TYPE_LIST = "ListLink";
@@ -39,16 +38,12 @@ public class DBAtomsTriplesGenerator implements DBAtomsGenerator {
         return tripleGraph;
     }
 
-    private long nextId() {
-        return id++;
-    }
-
     private DBAtom toAtom(Triple triple) {
-        return new DBLink(nextId(), TYPE_EVALUATION,
-                new DBNode(nextId(), TYPE_PREDICATE, triple.predicate),
-                new DBLink(nextId(), TYPE_LIST,
-                        new DBNode(nextId(), TYPE_CONCEPT, triple.subject),
-                        new DBNode(nextId(), TYPE_CONCEPT, triple.object)));
+        return atomspace.getLink(TYPE_EVALUATION,
+                atomspace.getNode(TYPE_PREDICATE, triple.predicate),
+                atomspace.getLink(TYPE_LIST,
+                        atomspace.getNode(TYPE_CONCEPT, triple.subject),
+                        atomspace.getNode(TYPE_CONCEPT, triple.object)));
     }
 
     /**

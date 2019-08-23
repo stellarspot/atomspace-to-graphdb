@@ -1,5 +1,6 @@
 package atomspace.performance.storage.neo4j;
 
+import atomspace.performance.DBAtom;
 import atomspace.performance.generator.Triple;
 import org.neo4j.driver.v1.*;
 
@@ -78,6 +79,12 @@ public class DBNeo4jStorage implements Closeable {
         return objects;
     }
 
+    public void putAtoms(List<DBAtom> atoms) {
+
+        for (DBAtom atom : atoms) {
+            System.out.printf("Atom: %s%n", atom);
+        }
+    }
 
     public void clearDB() {
         try (Session session = driver.session()) {
