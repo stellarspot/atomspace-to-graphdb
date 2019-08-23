@@ -1,13 +1,14 @@
 package atomspace.generator;
 
 import atomspace.performance.generator.Triple;
+import atomspace.performance.generator.RandomTripleGraph;
 import atomspace.performance.generator.TripleGraph;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Set;
 
-public class TripleGraphTest {
+public class RandomTripleGraphTest {
 
     @Test
     public void test() {
@@ -17,7 +18,7 @@ public class TripleGraphTest {
         int objects = 3;
         int predicatesPerObject = 2;
 
-        TripleGraph tripleGraph = new TripleGraph(subjects, predicates, objects, predicatesPerObject);
+        TripleGraph tripleGraph = new RandomTripleGraph(subjects, predicates, objects, predicatesPerObject);
         Set<Triple> triples = tripleGraph.getTriples();
         Assert.assertEquals(subjects, tripleGraph.getSubjects().size());
         Assert.assertEquals(objects, tripleGraph.getObjects().size());

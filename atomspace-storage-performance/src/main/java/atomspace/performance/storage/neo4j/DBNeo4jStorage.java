@@ -108,8 +108,20 @@ public class DBNeo4jStorage implements Closeable {
     }
 
     private void putLink(Transaction tx, DBLink link) {
-        for (DBAtom atom : link.atoms) {
+
+        for (int i = 0; i < link.atoms.length; i++) {
+            DBAtom atom = link.atoms[i];
             putAtom(tx, atom);
+            tx.run("MERGE (:Link { id: {id}, type: {type}})  ",
+                    parameters("id", link.id,
+                            "type", link.type));
+
+            tx.run("MATCH (a1:Link {id: {id1}})," +
+                            " (a2:Node {id: {id2}}) " +
+                            " CREATE (a1)-[r:ARG {position: {position}}] ->(a2)",
+                    parameters("position", i,
+                            "id1", link.id,
+                            "id2", atom.id));
         }
     }
 

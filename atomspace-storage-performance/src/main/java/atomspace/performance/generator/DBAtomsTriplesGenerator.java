@@ -21,7 +21,7 @@ public class DBAtomsTriplesGenerator implements DBAtomsGenerator {
     private static final String TYPE_CONCEPT = "ConceptNode";
 
     public DBAtomsTriplesGenerator() {
-        this(new TripleGraph());
+        this(new RandomTripleGraph());
     }
 
     public DBAtomsTriplesGenerator(TripleGraph tripleGraph) {
