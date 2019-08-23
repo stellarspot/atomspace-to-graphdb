@@ -1,6 +1,8 @@
 package atomspace.performance.storage.neo4j;
 
 import atomspace.performance.DBAtom;
+import atomspace.performance.DBLink;
+import atomspace.performance.DBNode;
 import atomspace.performance.generator.Triple;
 import org.neo4j.driver.v1.*;
 
@@ -80,9 +82,34 @@ public class DBNeo4jStorage implements Closeable {
     }
 
     public void putAtoms(List<DBAtom> atoms) {
+        try (Session session = driver.session()) {
+            try (Transaction tx = session.beginTransaction()) {
+                for (DBAtom atom : atoms) {
+                    putAtom(tx, atom);
+                }
+                tx.success();
+            }
+        }
+    }
 
-        for (DBAtom atom : atoms) {
-            System.out.printf("Atom: %s%n", atom);
+    private void putAtom(Transaction tx, DBAtom atom) {
+        if (atom instanceof DBNode) {
+            putNode(tx, (DBNode) atom);
+        } else if (atom instanceof DBLink) {
+            putLink(tx, (DBLink) atom);
+        }
+    }
+
+    private void putNode(Transaction tx, DBNode node) {
+        tx.run("MERGE (:Node { id: {id}, type: {type}, value: {value}})  ",
+                parameters("id", node.id,
+                        "type", node.type,
+                        "value", node.value));
+    }
+
+    private void putLink(Transaction tx, DBLink link) {
+        for (DBAtom atom : link.atoms) {
+            putAtom(tx, atom);
         }
     }
 

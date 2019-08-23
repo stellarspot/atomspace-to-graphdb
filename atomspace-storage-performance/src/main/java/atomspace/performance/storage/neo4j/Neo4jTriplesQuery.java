@@ -52,7 +52,7 @@ public class Neo4jTriplesQuery {
         List<DBAtom> atoms = generator.getAtoms();
 
         for (DBAtom atom : atoms) {
-            System.out.println(atom);
+            storage.putAtoms(atoms);
         }
     }
 }

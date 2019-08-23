@@ -2,7 +2,7 @@ package atomspace.performance;
 
 public class DBLink extends DBAtom {
 
-    final DBAtom[] atoms;
+    public final DBAtom[] atoms;
 
     DBLink(long id, String type, DBAtom... atoms) {
         super(id, type);
