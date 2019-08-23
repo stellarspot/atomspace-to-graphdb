@@ -36,3 +36,18 @@ MATCH (n) DELETE n;
 // count nodes
 MATCH (n) RETURN count(n);
 ```
+
+Store triples (subject, predicate, object):
+```cypher
+MERGE (:Person {name: {subject}})
+MERGE (:Item   {name: {object}})
+MATCH (a:Person {name: {subject}}), (b:Item {name: {object}})
+    CREATE (a)-[r:PREDICATE {name: {predicate}}] ->(b)
+```
+
+Query triples (subject, predicate, object):
+```cypher
+MATCH (:Person {name: {subject}})-[:PREDICATE {name: {predicate}}]->(s:Item) RETURN s.name
+MATCH (o:Person)-[p:PREDICATE]->(s:Item) WHERE o.name = 'subject-0' and p.name = 'predicate-0'  RETURN s
+
+```

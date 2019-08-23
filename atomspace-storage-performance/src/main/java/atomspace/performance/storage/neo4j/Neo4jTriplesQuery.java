@@ -4,6 +4,7 @@ import atomspace.performance.generator.DBAtomsTriplesGenerator;
 import atomspace.performance.generator.Triple;
 import atomspace.performance.generator.TripleGraph;
 
+import java.util.List;
 import java.util.Set;
 
 public class Neo4jTriplesQuery {
@@ -28,6 +29,12 @@ public class Neo4jTriplesQuery {
             }
 
             storage.putTriples(triples);
+
+            int iterations = 2;
+            Triple[] array = triples.toArray(new Triple[]{});
+
+            List<String> queryObjects = storage.queryTripleObject(iterations, array);
+            System.out.printf("objects found: %d%n", queryObjects.size());
         }
     }
 }
