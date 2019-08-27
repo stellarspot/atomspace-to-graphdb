@@ -50,11 +50,4 @@ public class RandomTripleGraph extends TripleGraph {
                 rand.nextInt(predicatesNumber),
                 rand.nextInt(objectsNumber));
     }
-
-    private void addTriple(Triple triple) {
-        subjects.add(triple.subject);
-        predicates.add(triple.predicate);
-        objects.add(triple.object);
-        triples.add(triple);
-    }
 }

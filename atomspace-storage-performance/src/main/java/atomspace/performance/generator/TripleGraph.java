@@ -31,4 +31,11 @@ public abstract class TripleGraph {
         return String.format("subjects: %d, predicates: %d, objects: %d\n",
                 subjects.size(), predicates.size(), objects.size());
     }
+
+    protected final void addTriple(Triple triple) {
+        subjects.add(triple.subject);
+        predicates.add(triple.predicate);
+        objects.add(triple.object);
+        triples.add(triple);
+    }
 }
