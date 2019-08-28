@@ -22,7 +22,7 @@ public class PerformanceSampleNeo4j {
 //                    new Triple("Bob", "likes", "apple")
 //            );
 
-            int N = 40;
+            int N = 20;
             int subjectsNumber = N;
             int predicatesNumber = N / 2;
             int objectsNumber = N;
@@ -38,7 +38,7 @@ public class PerformanceSampleNeo4j {
             TripleNeo4jModel predicateModel = new TripleAtomPredicateNeo4jModel(storage, tripleGraph);
             TripleNeo4jModel evaluationModel = new TripleAtomEvaluationNeo4jModel(storage, tripleGraph);
 
-            measureRequests(storage, tripleGraph, 10, nativeModel, predicateModel, evaluationModel);
+            measureRequests(storage, tripleGraph, 4, nativeModel, predicateModel, evaluationModel);
         }
     }
 
@@ -52,7 +52,6 @@ public class PerformanceSampleNeo4j {
 
 
         for (TripleNeo4jModel model : models) {
-            System.out.printf("Model: %s%n", model.getName());
 
             StopWatch createWatch = new StopWatch();
             createWatch.reset();
@@ -82,8 +81,9 @@ public class PerformanceSampleNeo4j {
 
             queryWatch.stop();
 
-            System.out.printf("create time: %.2f%n", (float) createWatch.getTime(timeUnit) / iterations);
-            System.out.printf("query time: %.2f%n", (float) queryWatch.getTime(timeUnit) / iterations);
+            float createTime = (float) createWatch.getTime(timeUnit) / iterations;
+            float queryTime = (float) queryWatch.getTime(timeUnit) / iterations;
+            System.out.printf("model: %s, create: %.2f, query: %.2f%n", model.getName(), createTime, queryTime);
         }
     }
 }

@@ -12,7 +12,30 @@
 
 ### Neo4j
 
-Triples
+Triple graph with parameter N  
+subjects: N  
+objects: N  
+predicates: N / 2  
+predicates per subject: N / 4
+
+
+Number in columns is the N parameter in the triple graph.
+
+Create time (ms)
+
+|Model     |  20   |  40   | 60    | 80     |
+|----------|-------|-------|-------|--------|
+|Native    |69.25  |106.00 |216.25 |399.75  |
+|Predicate |82.00  |549.00 |2291.25|6539.75 |
+|Evaluation|159.75 |1614.50|7217.75|22171.00|
+
+Query time (ms):
+
+|Model     |  20  |  40  | 60   | 80    |
+|----------|------|------|------|-------|
+|Native    |13.75 |15.75 |18.50 |33.75  |
+|Predicate |17.50 |47.75 |110.50|219.75 |
+|Evaluation|47.25 |198.50|549.75|1266.50|
 
 
 ## Storages
