@@ -28,4 +28,6 @@ public abstract class TripleNeo4jModel {
     }
 
     public abstract List<String> queryObjects(int iterations);
+
+    public abstract String getName();
 }

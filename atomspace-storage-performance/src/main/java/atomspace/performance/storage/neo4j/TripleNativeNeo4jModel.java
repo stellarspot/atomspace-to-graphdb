@@ -22,6 +22,11 @@ public class TripleNativeNeo4jModel extends TripleNeo4jModel {
     }
 
     @Override
+    public String getName() {
+        return "Native";
+    }
+
+    @Override
     public void storeTriples() {
         try (Session session = storage.driver.session()) {
             try (Transaction tx = session.beginTransaction()) {

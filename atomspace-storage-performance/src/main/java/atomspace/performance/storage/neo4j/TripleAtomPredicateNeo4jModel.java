@@ -25,6 +25,10 @@ public class TripleAtomPredicateNeo4jModel extends TripleAtomNeo4jModel {
         super(storage, tripleGraph);
     }
 
+    @Override
+    public String getName() {
+        return "Predicate";
+    }
 
     // PredicateLink(SubjectNode, ObjectNode)
     @Override

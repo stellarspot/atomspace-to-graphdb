@@ -31,6 +31,11 @@ public class TripleAtomEvaluationNeo4jModel extends TripleAtomNeo4jModel {
     }
 
     @Override
+    public String getName() {
+        return "Evaluation";
+    }
+
+    @Override
     protected DBAtom toAtom(Triple triple) {
         return atomspace.getLink(TYPE_EVALUATION,
                 atomspace.getNode(TYPE_PREDICATE, triple.predicate),
