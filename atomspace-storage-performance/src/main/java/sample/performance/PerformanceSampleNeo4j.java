@@ -1,9 +1,7 @@
 package sample.performance;
 
-import atomspace.performance.generator.FixedTripleGraph;
-import atomspace.performance.generator.RandomTripleGraph;
-import atomspace.performance.generator.Triple;
-import atomspace.performance.generator.TripleGraph;
+import atomspace.performance.triple.RandomTripleGraph;
+import atomspace.performance.triple.TripleGraph;
 import atomspace.performance.storage.neo4j.*;
 import org.apache.commons.lang3.time.StopWatch;
 

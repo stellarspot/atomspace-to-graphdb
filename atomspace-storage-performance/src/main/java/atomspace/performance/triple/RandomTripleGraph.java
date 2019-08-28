@@ -1,4 +1,4 @@
-package atomspace.performance.generator;
+package atomspace.performance.triple;
 
 import java.util.Random;
 

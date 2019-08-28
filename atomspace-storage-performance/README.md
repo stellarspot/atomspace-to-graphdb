@@ -8,6 +8,12 @@
 * [Ontology Java parser OWLAPI](https://github.com/owlcs/owlapi/)
 * [Introduction OWLAPI](http://syllabus.cs.manchester.ac.uk/pgt/2017/COMP62342/introduction-owl-api-msc.pdf)
 
+## Performance
+
+### Neo4j
+
+Triples
+
 
 ## Storages
 

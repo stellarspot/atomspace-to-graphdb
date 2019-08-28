@@ -1,8 +1,8 @@
 package atomspace.generator;
 
-import atomspace.performance.generator.Triple;
-import atomspace.performance.generator.RandomTripleGraph;
-import atomspace.performance.generator.TripleGraph;
+import atomspace.performance.triple.Triple;
+import atomspace.performance.triple.RandomTripleGraph;
+import atomspace.performance.triple.TripleGraph;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package atomspace.performance.generator;
+package atomspace.performance.triple;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,6 +1,6 @@
 package atomspace.performance.storage.neo4j;
 
-import atomspace.performance.generator.TripleGraph;
+import atomspace.performance.triple.TripleGraph;
 
 import java.util.List;
 

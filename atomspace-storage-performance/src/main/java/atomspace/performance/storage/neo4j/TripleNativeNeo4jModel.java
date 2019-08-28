@@ -1,7 +1,7 @@
 package atomspace.performance.storage.neo4j;
 
-import atomspace.performance.generator.Triple;
-import atomspace.performance.generator.TripleGraph;
+import atomspace.performance.triple.Triple;
+import atomspace.performance.triple.TripleGraph;
 import org.neo4j.driver.v1.Record;
 import org.neo4j.driver.v1.Session;
 import org.neo4j.driver.v1.StatementResult;
