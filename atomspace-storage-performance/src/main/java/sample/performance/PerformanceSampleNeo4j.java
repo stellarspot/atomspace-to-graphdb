@@ -1,8 +1,8 @@
 package sample.performance;
 
+import atomspace.performance.storage.neo4j.*;
 import atomspace.performance.triple.RandomTripleGraph;
 import atomspace.performance.triple.TripleGraph;
-import atomspace.performance.storage.neo4j.*;
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.util.List;
@@ -50,20 +50,12 @@ public class PerformanceSampleNeo4j {
         System.out.printf("iterations: %d%n", iterations);
         TimeUnit timeUnit = TimeUnit.MILLISECONDS;
 
-
         for (TripleNeo4jModel model : models) {
 
-            StopWatch createWatch = new StopWatch();
-            createWatch.reset();
-            createWatch.start();
-            createWatch.suspend();
+            StopWatch createWatch = createAndInitStopWatch();
+            StopWatch queryWatch = createAndInitStopWatch();
 
-            StopWatch queryWatch = new StopWatch();
-            queryWatch.reset();
-            queryWatch.start();
-            queryWatch.suspend();
-
-            int queryNumbers = tripleGraph.getObjects().size();
+            int queryNumbers = 50;
 
             for (int i = 0; i < iterations; i++) {
                 storage.clearDB();
@@ -85,5 +77,13 @@ public class PerformanceSampleNeo4j {
             float queryTime = (float) queryWatch.getTime(timeUnit) / iterations;
             System.out.printf("model: %s, create: %.2f, query: %.2f%n", model.getName(), createTime, queryTime);
         }
+    }
+
+    private static StopWatch createAndInitStopWatch() {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.reset();
+        stopWatch.start();
+        stopWatch.suspend();
+        return stopWatch;
     }
 }

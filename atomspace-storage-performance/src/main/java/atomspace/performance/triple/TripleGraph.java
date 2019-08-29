@@ -33,7 +33,6 @@ public abstract class TripleGraph {
     }
 
     protected final void addTriple(Triple triple) {
-        System.out.printf("add triple: %s\n", triple);
         subjects.add(triple.subject);
         predicates.add(triple.predicate);
         objects.add(triple.object);

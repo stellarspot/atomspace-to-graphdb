@@ -14,24 +14,24 @@ public class PerformanceChartQueryNeo4j extends Application {
     static final String TITLE = "Query requests";
 
     static final double[][] DATA_NATIVE = {
-            {20, 13.75},
-            {40, 15.75},
-            {60, 18.50},
-            {80, 33.75},
+            {20, 20.25},
+            {40, 18.25},
+            {60, 17.25},
+            {80, 21.50},
     };
 
     static final double[][] DATA_PREDICATE = {
-            {20, 17.50},
-            {40, 47.75},
-            {60, 110.50},
-            {80, 219.75},
+            {20, 37.25},
+            {40, 62.75},
+            {60, 91.25},
+            {80, 154.00},
     };
 
     static final double[][] DATA_EVALUATION = {
-            {20, 47.25},
-            {40, 198.50},
-            {60, 549.75},
-            {80, 1266.50},
+            {20, 69.75},
+            {40, 239.50},
+            {60, 462.75},
+            {80, 808.25},
     };
 
     @Override
@@ -44,7 +44,7 @@ public class PerformanceChartQueryNeo4j extends Application {
         double xMax = 80;
 
         double yMin = 10;
-        double yMax = 1270;
+        double yMax = 810;
 
 
         final NumberAxis xAxis = new NumberAxis(xMin, xMax, 20);

@@ -40,7 +40,7 @@ public class SampleNeo4j {
 
             List<String> objects = model.queryObject();
             for (String obj : objects) {
-                System.out.printf("Object: %s%n", obj);
+                System.out.printf("Object: %s%size", obj);
             }
 
         }

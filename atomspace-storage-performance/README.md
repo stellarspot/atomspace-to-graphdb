@@ -103,13 +103,13 @@ Create time (ms)
 
 ![Create requests](docs/images/time_create.png)
 
-Query time (ms):
+Query time (ms), number of queries is 50:
 
-|Model     |  20  |  40  | 60   | 80    |
-|----------|------|------|------|-------|
-|Native    |13.75 |15.75 |18.50 |33.75  |
-|Predicate |17.50 |47.75 |110.50|219.75 |
-|Evaluation|47.25 |198.50|549.75|1266.50|
+|Model     |  20  |  40  | 60   | 80   |
+|----------|------|------|------|------|
+|Native    |20.25 |18.25 |17.25 |21.50 |
+|Predicate |37.50 |62.75 |91.50 |154.00|
+|Evaluation|69.75 |239.50|462.75|808.25|
 
 ![Query requests](docs/images/time_query.png)
 
