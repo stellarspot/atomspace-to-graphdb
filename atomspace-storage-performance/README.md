@@ -1,13 +1,13 @@
 # AtomSpace backing storage performance
 
-## Performance
-
-### Neo4j
+## Neo4j
 
 The following 3 models are used to represent a triple (subject, predicate, object) in Neo4j graph:
 * Native Model
 * Predicate Model
 * Evaluation Model
+
+### Native Model
 
 Native model stores subject and object as nodes and predicate as link between them.
 For example triple (Alice, likes, ice-cream) is stored as:
@@ -22,7 +22,42 @@ MATCH (Subject {name: "Alice"}) - [:LIKES] -> (obj:Object)
 RETURN obj.name
 ```
 
-Triple graph with parameter N  
+### Predicate Model
+
+Predicate model represents triple (subject, predicate, object) as
+a hyper-edge 
+```text
+PredicateLink
+    SubjectNode "subject"
+    ObjectNode "object"
+```
+and is represented in property graph as   
+Node:
+```cypher
+MERGE (:Atom:Node { id: {id}, type: {type}, value: {value}})  
+```
+
+Link:
+```cypher
+MERGE (:Atom:Link { id: {id}, type: {type}})
+MATCH (a1:Atom {id: {id1}}), (a2:Atom {id: {id2}})
+MERGE (a1)-[r:ARG {position: {position}}] ->(a2)
+```
+
+![](docs/images/predicate_graph.png)
+
+Query to the object: What does Alice like?
+```cypher
+MATCH
+ (p:Atom:Link {type: "LIKES_LINK"})-[{position: 0}]-> (:Atom:Node {type: "Subject", value: "Alice"}),
+ (p)-[{position: 1}]-> (o:Atom:Node {type: "Object"})
+ RETURN o.value
+```
+
+### Triple graph creation and query performance 
+
+Triple graph with parameter N consists of a list of triples (subject, predicate, object)
+where number of  
 subjects: N  
 objects: N  
 predicates: N / 2  

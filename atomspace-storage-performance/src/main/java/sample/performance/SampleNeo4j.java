@@ -25,13 +25,19 @@ public class SampleNeo4j {
 //            );
 
 
-            TripleNeo4jModel nativeModel = new TripleNativeNeo4jModel(storage, tripleGraph);
-//            TripleNeo4jModel predicateModel = new TripleAtomPredicateNeo4jModel(storage, tripleGraph);
+//            TripleNeo4jModel model = new TripleNativeNeo4jModel(storage, tripleGraph);
+            TripleNeo4jModel model = new TripleAtomPredicateNeo4jModel(storage, tripleGraph);
 //            TripleNeo4jModel evaluationModel = new TripleAtomEvaluationNeo4jModel(storage, tripleGraph);
 
 
             storage.clearDB();
-            nativeModel.storeTriples();
+            model.storeTriples();
+
+            List<String> objects = model.queryObject();
+            for (String obj : objects) {
+                System.out.printf("Object: %s%n", obj);
+            }
+
         }
     }
 }
