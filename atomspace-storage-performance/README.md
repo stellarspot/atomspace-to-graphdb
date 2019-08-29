@@ -88,6 +88,8 @@ objects: N
 predicates: N / 2  
 predicates per subject: N / 4
 
+Example of a triple graph with N = 8 in Native model:
+![Triple graph](docs/images/triple_graph.png)
 
 Number in columns is the N parameter in the triple graph.
 
