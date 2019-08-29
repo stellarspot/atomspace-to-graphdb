@@ -1,6 +1,7 @@
 package atomspace.performance.triple;
 
 import java.util.Random;
+import java.util.Set;
 
 public class RandomTripleGraph extends TripleGraph {
 
@@ -31,6 +32,11 @@ public class RandomTripleGraph extends TripleGraph {
      */
     private void initGraph() {
         Random rand = new Random(42);
+
+        initSet(subjects, "subject", subjectsNumber);
+        initSet(objects, "object", objectsNumber);
+        initSet(predicates, "predicate", predicatesNumber);
+
         for (int i = 0; i < subjectsNumber; i++) {
             for (int j = 0; j < predicatesPerSubjectNumber; j++) {
                 while (true) {
@@ -49,5 +55,11 @@ public class RandomTripleGraph extends TripleGraph {
                 rand.nextInt(subjectsNumber),
                 rand.nextInt(predicatesNumber),
                 rand.nextInt(objectsNumber));
+    }
+
+    private void initSet(Set<String> set, String prefix, int number) {
+        for (int i = 0; i < number; i++) {
+            set.add(String.format("%s-%d", prefix, i));
+        }
     }
 }

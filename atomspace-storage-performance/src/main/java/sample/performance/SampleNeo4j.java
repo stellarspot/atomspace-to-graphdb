@@ -15,8 +15,8 @@ public class SampleNeo4j {
         try (DBNeo4jStorage storage = new DBNeo4jStorage()) {
 
 
-            TripleGraph tripleGraph = new FixedTripleGraph(
-                    new Triple("Alice", "likes", "ice-cream"));
+//            TripleGraph tripleGraph = new FixedTripleGraph(
+//                    new Triple("Alice", "likes", "ice-cream"));
 
 //            TripleGraph tripleGraph = new FixedTripleGraph(
 //                    new Triple("Alice", "likes", "ice-cream"),
@@ -25,11 +25,16 @@ public class SampleNeo4j {
 //            );
 
 
-//            TripleNeo4jModel model = new TripleNativeNeo4jModel(storage, tripleGraph);
+            int N = 8;
+            RandomTripleGraph tripleGraph = new RandomTripleGraph(N, N / 2, N, N / 4);
+
+
+            TripleNeo4jModel model = new TripleNativeNeo4jModel(storage, tripleGraph);
 //            TripleNeo4jModel model = new TripleAtomPredicateNeo4jModel(storage, tripleGraph);
-            TripleNeo4jModel model = new TripleAtomEvaluationNeo4jModel(storage, tripleGraph);
+//            TripleNeo4jModel model = new TripleAtomEvaluationNeo4jModel(storage, tripleGraph);
 
 
+            System.out.printf("model: %s", tripleGraph.getStatistics());
             storage.clearDB();
             model.storeTriples();
 
