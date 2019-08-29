@@ -39,12 +39,11 @@ MERGE (:Atom:Node { id: {id}, type: {type}, value: {value}})
 
 Link:
 ```cypher
-MERGE (:Atom:Link { id: {id}, type: {type}})
 MATCH (a1:Atom {id: {id1}}), (a2:Atom {id: {id2}})
 MERGE (a1)-[r:ARG {position: {position}}] ->(a2)
 ```
 
-![](docs/images/predicate_graph.png)
+![Predicate graph](docs/images/predicate_graph.png)
 
 Query to the object: What does Alice like?
 ```cypher
@@ -66,8 +65,19 @@ EvaluationLink
         ObjectNode "object"
 ```
 
-![](docs/images/evaluation_graph.png)
+![Evaluation graph](docs/images/evaluation_graph.png)
 
+The code to create en evaluation link in Neo4j is the same as in the Predicate model.
+
+Query to the object: What does Alice like?
+```cypher
+MATCH
+(e:Atom:Link {type: 'EvaluationLink'}) - [:ARG {position: 0}] -> (:Atom:Node {value: {predicate}}),
+(e) - [:ARG {position: 1}] -> (l:Atom:Link {type: 'ListLink'}),
+(l) - [:ARG {position: 0}] -> (:Atom:Node {type: 'ConceptNode', value: {subject}}),
+(l) - [:ARG {position: 1}] -> (o:Atom:Node {type: 'ConceptNode'})
+RETURN o.value
+```
 
 ### Triple graph creation and query performance 
 
