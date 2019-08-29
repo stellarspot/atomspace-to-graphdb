@@ -1,16 +1,26 @@
 # AtomSpace backing storage performance
 
-
-## Data
-
-### Ontology
-* [Animal Natural History and Life History Ontology](http://aber-owl.net/ontology/ADW/)
-* [Ontology Java parser OWLAPI](https://github.com/owlcs/owlapi/)
-* [Introduction OWLAPI](http://syllabus.cs.manchester.ac.uk/pgt/2017/COMP62342/introduction-owl-api-msc.pdf)
-
 ## Performance
 
 ### Neo4j
+
+The following 3 models are used to represent a triple (subject, predicate, object) in Neo4j graph:
+* Native Model
+* Predicate Model
+* Evaluation Model
+
+Native model stores subject and object as nodes and predicate as link between them.
+For example triple (Alice, likes, ice-cream) is stored as:
+```cypher
+(:Subject {name: "Alice"}) - [:LIKES] -> (:Object {name: "ice-cream"})
+```
+![Native graph](docs/images/native_graph.png)
+
+Query to the object: What does Alice like?
+```cypher
+MATCH (Subject {name: "Alice"}) - [:LIKES] -> (obj:Object)
+RETURN obj.name
+```
 
 Triple graph with parameter N  
 subjects: N  
@@ -83,3 +93,10 @@ MATCH (:Person {name: {subject}})-[:PREDICATE {name: {predicate}}]->(s:Item) RET
 MATCH (o:Person)-[p:PREDICATE]->(s:Item) WHERE o.name = 'subject-0' and p.name = 'predicate-0'  RETURN s
 
 ```
+
+## Data
+
+### Ontology
+* [Animal Natural History and Life History Ontology](http://aber-owl.net/ontology/ADW/)
+* [Ontology Java parser OWLAPI](https://github.com/owlcs/owlapi/)
+* [Introduction OWLAPI](http://syllabus.cs.manchester.ac.uk/pgt/2017/COMP62342/introduction-owl-api-msc.pdf)
