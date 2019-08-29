@@ -54,6 +54,21 @@ MATCH
  RETURN o.value
 ```
 
+### Evaluation Model
+
+Evaluation model represents triple (subject, predicate, object) as
+a hyper-edge 
+```text
+EvaluationLink
+    PredicateNode "predicate"
+    ListLink
+        SubjectNode "subject"
+        ObjectNode "object"
+```
+
+![](docs/images/evaluation_graph.png)
+
+
 ### Triple graph creation and query performance 
 
 Triple graph with parameter N consists of a list of triples (subject, predicate, object)
