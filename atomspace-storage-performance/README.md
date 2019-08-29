@@ -9,7 +9,7 @@ The following 3 models are used to represent a triple (subject, predicate, objec
 
 ### Native Model
 
-Native model stores subject and object as nodes and predicate as link between them.
+Native model stores subject and object as nodes and predicate as link between them.  
 For example triple (Alice, likes, ice-cream) is stored as:
 ```cypher
 (:Subject {name: "Alice"}) - [:LIKES] -> (:Object {name: "ice-cream"})
