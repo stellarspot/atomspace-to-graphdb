@@ -29,6 +29,8 @@ Create time (ms)
 |Predicate |82.00  |549.00 |2291.25|6539.75 |
 |Evaluation|159.75 |1614.50|7217.75|22171.00|
 
+![Create requests](docs/images/time_create.png)
+
 Query time (ms):
 
 |Model     |  20  |  40  | 60   | 80    |
@@ -37,6 +39,7 @@ Query time (ms):
 |Predicate |17.50 |47.75 |110.50|219.75 |
 |Evaluation|47.25 |198.50|549.75|1266.50|
 
+![Query requests](docs/images/time_query.png)
 
 ## Storages
 
