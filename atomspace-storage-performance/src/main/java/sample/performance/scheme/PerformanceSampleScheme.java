@@ -21,19 +21,20 @@ public class PerformanceSampleScheme {
 //        TripleGraph tripleGraph = new FixedTripleGraph(
 //                new Triple("Alice", "likes", "ice-cream"));
 
-        TripleGraph tripleGraph = new FixedTripleGraph(
-                new Triple("Alice", "likes", "ice-cream"),
-                new Triple("Alice", "likes", "apple"),
-                new Triple("Bob", "likes", "apple")
-        );
+//        TripleGraph tripleGraph = new FixedTripleGraph(
+//                new Triple("Alice", "likes", "ice-cream"),
+//                new Triple("Alice", "likes", "apple"),
+//                new Triple("Bob", "likes", "apple")
+//        );
 
 
-//        int N = 80;
-//        TripleGraph tripleGraph = PerformanceTripleGraph.getGraph(N);
+        int N = 10;
+        TripleGraph tripleGraph = PerformanceTripleGraph.getGraph(N);
 
         TripleModel model = new TripleAtomEvaluationSchemeModel("performance-evaluation", tripleGraph);
 
 
         model.storeTriples();
+        model.queryObjects(3);
     }
 }

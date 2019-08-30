@@ -1,7 +1,6 @@
 package sample.performance;
 
 import atomspace.performance.triple.RandomTripleGraph;
-import atomspace.performance.triple.Triple;
 import atomspace.performance.triple.TripleGraph;
 
 public class PerformanceTripleGraph {

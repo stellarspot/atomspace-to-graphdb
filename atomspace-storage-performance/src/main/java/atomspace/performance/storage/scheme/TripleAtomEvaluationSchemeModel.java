@@ -9,6 +9,7 @@ import atomspace.performance.triple.TripleGraph;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class TripleAtomEvaluationSchemeModel extends TripleAtomSchemeModel {
 
@@ -23,8 +24,7 @@ public class TripleAtomEvaluationSchemeModel extends TripleAtomSchemeModel {
 
         AtomsSaver saver = new AtomsSaver();
 
-        for (Triple triple : tripleGraph.getTriples()) {
-            DBAtom atom = TripleAtomModel.toAtom(atomspace, triple);
+        for (DBAtom atom : atoms) {
             TripleAtomModel.handleAtom(atom, saver);
             saver.nextLine();
         }
@@ -32,6 +32,40 @@ public class TripleAtomEvaluationSchemeModel extends TripleAtomSchemeModel {
         System.out.println(saver.builder);
 
         saveToFile("create", saver.builder);
+    }
+
+    @Override
+    public List<String> queryObjects(int iterations) {
+
+        StringBuilder builder = new StringBuilder();
+
+        List<Triple> triples = new LinkedList<>();
+        triples.addAll(tripleGraph.getTriples());
+
+        int size = triples.size();
+        Random rand = new Random(42);
+
+        for (int i = 0; i < iterations; i++) {
+            Triple triple = triples.get(rand.nextInt(size));
+            builder.append(String.format("" +
+                            "(cog-execute! (Get\n" +
+                            "   (EvaluationLink\n" +
+                            "       (PredicateNode \"%s\")\n" +
+                            "       (ListLink\n" +
+                            "           (ConceptNode \"%s\")\n" +
+                            "           (VariableNode \"$WHAT\")))\n" +
+                            "))\n\n",
+                    triple.predicate, triple.subject));
+        }
+
+        saveToFile("query", builder);
+
+        return new LinkedList<>();
+    }
+
+    @Override
+    public String getName() {
+        return "Evaluation";
     }
 
     static class AtomsSaver implements AtomHandler {
@@ -65,15 +99,5 @@ public class TripleAtomEvaluationSchemeModel extends TripleAtomSchemeModel {
         void nextLine() {
             builder.append("\n");
         }
-    }
-
-    @Override
-    public List<String> queryObjects(int iterations) {
-        return new LinkedList<>();
-    }
-
-    @Override
-    public String getName() {
-        return "Evaluation";
     }
 }
