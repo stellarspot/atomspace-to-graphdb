@@ -13,8 +13,16 @@ public interface TripleAtomModel extends TripleModel {
     String TYPE_PREDICATE = "PredicateNode";
     String TYPE_CONCEPT = "ConceptNode";
 
+    String TYPE_INHERITANCE= "InheritanceLink";
 
-    static DBAtom toAtom(DBAtomSpace atomspace, Triple triple) {
+    static DBAtom toAtomPredicate(DBAtomSpace atomspace, Triple triple) {
+        return atomspace.getLink(TYPE_INHERITANCE,
+                atomspace.getNode(TYPE_CONCEPT, triple.subject),
+                atomspace.getNode(TYPE_CONCEPT, triple.object));
+    }
+
+
+    static DBAtom toAtomEvaluation(DBAtomSpace atomspace, Triple triple) {
         return atomspace.getLink(TYPE_EVALUATION,
                 atomspace.getNode(TYPE_PREDICATE, triple.predicate),
                 atomspace.getLink(TYPE_LIST,
@@ -43,5 +51,4 @@ public interface TripleAtomModel extends TripleModel {
 
         void handleLinkEnd(DBLink link);
     }
-
 }

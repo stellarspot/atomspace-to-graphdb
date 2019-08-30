@@ -3,6 +3,7 @@ package sample.performance.scheme;
 import atomspace.performance.storage.TripleModel;
 import atomspace.performance.storage.neo4j.*;
 import atomspace.performance.storage.scheme.TripleAtomEvaluationSchemeModel;
+import atomspace.performance.storage.scheme.TripleAtomPredicateSchemeModel;
 import atomspace.performance.storage.scheme.TripleAtomSchemeModel;
 import atomspace.performance.triple.FixedTripleGraph;
 import atomspace.performance.triple.RandomTripleGraph;
@@ -21,19 +22,20 @@ public class PerformanceSampleScheme {
 //        TripleGraph tripleGraph = new FixedTripleGraph(
 //                new Triple("Alice", "likes", "ice-cream"));
 
-//        TripleGraph tripleGraph = new FixedTripleGraph(
-//                new Triple("Alice", "likes", "ice-cream"),
-//                new Triple("Alice", "likes", "apple"),
-//                new Triple("Bob", "likes", "apple")
-//        );
+        TripleGraph tripleGraph = new FixedTripleGraph(
+                new Triple("Alice", "likes", "ice-cream"),
+                new Triple("Alice", "likes", "apple"),
+                new Triple("Bob", "likes", "apple")
+        );
 
 
-        int N = 80;
-        TripleGraph tripleGraph = PerformanceTripleGraph.getGraph(N);
+//        int N = 80;
+//        TripleGraph tripleGraph = PerformanceTripleGraph.getGraph(N);
 
-        TripleModel model = new TripleAtomEvaluationSchemeModel("as", tripleGraph);
+        TripleModel model = new TripleAtomPredicateSchemeModel("as", tripleGraph);
+//        TripleModel model = new TripleAtomEvaluationSchemeModel("as", tripleGraph);
 
-        int queries = 50;
+        int queries = 5;
 
         model.storeTriples();
         model.queryObjects(queries);

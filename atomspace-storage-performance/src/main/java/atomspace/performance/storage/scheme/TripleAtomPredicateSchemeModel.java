@@ -11,21 +11,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class TripleAtomEvaluationSchemeModel extends TripleAtomSchemeModel {
+public class TripleAtomPredicateSchemeModel extends TripleAtomSchemeModel {
 
 
-    public TripleAtomEvaluationSchemeModel(String file, TripleGraph tripleGraph) {
+    public TripleAtomPredicateSchemeModel(String file, TripleGraph tripleGraph) {
         super(file, tripleGraph);
     }
 
     @Override
     protected DBAtom toAtom(Triple triple) {
-        return TripleAtomModel.toAtomEvaluation(atomspace, triple);
+        return TripleAtomModel.toAtomPredicate(atomspace, triple);
     }
 
     @Override
     public void storeTriples() {
-        System.out.printf("Store Scheme triples%n");
 
         AtomsSaver saver = new AtomsSaver();
 
@@ -54,13 +53,11 @@ public class TripleAtomEvaluationSchemeModel extends TripleAtomSchemeModel {
             Triple triple = triples.get(rand.nextInt(size));
             builder.append(String.format("" +
                             "(cog-execute! (Get\n" +
-                            "   (EvaluationLink\n" +
-                            "       (PredicateNode \"%s\")\n" +
-                            "       (ListLink\n" +
+                            "   (InheritanceLink\n" +
                             "           (ConceptNode \"%s\")\n" +
-                            "           (VariableNode \"$WHAT\")))\n" +
+                            "           (VariableNode \"$WHAT\"))\n" +
                             "))\n\n",
-                    triple.predicate, triple.subject));
+                    triple.subject));
         }
 
         saveToFile("query", builder);
@@ -71,38 +68,5 @@ public class TripleAtomEvaluationSchemeModel extends TripleAtomSchemeModel {
     @Override
     public String getName() {
         return "Evaluation";
-    }
-
-    static class AtomsSaver implements AtomHandler {
-
-        final StringBuilder builder = new StringBuilder();
-
-        @Override
-        public void handleNode(DBNode node) {
-            builder
-                    .append("(")
-                    .append(node.type)
-                    .append(" \"")
-                    .append(node.value)
-                    .append("\")");
-        }
-
-        @Override
-        public void handleLinkBegin(DBLink link) {
-            builder
-                    .append("(")
-                    .append(link.type)
-                    .append(" ");
-        }
-
-        @Override
-        public void handleLinkEnd(DBLink link) {
-            builder.append(")");
-
-        }
-
-        void nextLine() {
-            builder.append("\n");
-        }
     }
 }
