@@ -1,8 +1,6 @@
 package sample;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
-import org.semanticweb.owlapi.formats.LabelFunctionalDocumentFormat;
 import org.semanticweb.owlapi.formats.RDFJsonDocumentFormat;
 import org.semanticweb.owlapi.model.*;
 

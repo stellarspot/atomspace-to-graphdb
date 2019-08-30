@@ -1,10 +1,11 @@
 package atomspace.performance.storage.neo4j;
 
+import atomspace.performance.storage.TripleModel;
 import atomspace.performance.triple.TripleGraph;
 
 import java.util.List;
 
-public abstract class TripleNeo4jModel {
+public abstract class TripleNeo4jModel implements TripleModel {
 
     protected final DBNeo4jStorage storage;
     protected final TripleGraph tripleGraph;
@@ -17,17 +18,4 @@ public abstract class TripleNeo4jModel {
         this.storage = storage;
         this.tripleGraph = tripleGraph;
     }
-
-    // Alice likes ice-cream.
-    // (Alice, likes, ice-cream)
-    public abstract void storeTriples();
-
-    // What does Alice like?
-    public List<String> queryObject() {
-        return queryObjects(1);
-    }
-
-    public abstract List<String> queryObjects(int iterations);
-
-    public abstract String getName();
 }
