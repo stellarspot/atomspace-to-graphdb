@@ -9,6 +9,7 @@ import atomspace.performance.triple.RandomTripleGraph;
 import atomspace.performance.triple.Triple;
 import atomspace.performance.triple.TripleGraph;
 import org.apache.commons.lang3.time.StopWatch;
+import sample.performance.PerformanceTripleGraph;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,6 +27,9 @@ public class PerformanceSampleScheme {
                 new Triple("Bob", "likes", "apple")
         );
 
+
+//        int N = 80;
+//        TripleGraph tripleGraph = PerformanceTripleGraph.getGraph(N);
 
         TripleModel model = new TripleAtomEvaluationSchemeModel("performance-evaluation", tripleGraph);
 

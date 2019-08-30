@@ -20,7 +20,6 @@ public abstract class TripleSchemeModel implements TripleModel {
     protected void saveToFile(String fileSuffix, StringBuilder builder) {
         String fileName = String.format("%s-%s.scm", filePrefix, fileSuffix);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write("(use-modules (opencog) (opencog exec))\n\n");
             writer.write(builder.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
