@@ -113,6 +113,43 @@ Query time (ms), number of queries is 50:
 
 ![Query requests](docs/images/time_query.png)
 
+
+## Atomspace
+
+Create Evaluation link:
+```scheme
+(EvaluationLink
+  (PredicateNode "likes")
+    (ListLink
+      (ConceptNode "Alice")
+      (ConceptNode "ice-cream")))
+```
+
+Query to object:
+```scheme
+(EvaluationLink
+  (PredicateNode "likes")
+    (ListLink
+      (ConceptNode "Alice")
+      (VariableNode "$WHAT")))
+```
+
+Number in columns is the N parameter in the triple graph.
+
+Create time (ms)
+
+|Model     |  20   |  40   | 60    | 80     |
+|----------|-------|-------|-------|--------|
+|Evaluation|4.73   |18.65  |41.79  |82.18   |
+
+
+Query time (ms), number of queries is 50:
+
+|Model     |  20   |  40   | 60    | 80     |
+|----------|-------|-------|-------|--------|
+|Evaluation|4.62   |5.58   |5.93   |7.97   |
+
+
 ## Storages
 
 ### Neo4j

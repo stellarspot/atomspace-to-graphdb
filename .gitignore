@@ -2,3 +2,7 @@
 target/
 
 opencog.log
+
+as-create.scm
+as-query.scm
+

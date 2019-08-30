@@ -27,11 +27,11 @@ for i in range(N):
     scheme_eval(atomspace, '(load "%s")' % file_create)
     delta += (time.time() - t)
 
-print("create time:", delta / N)
+print("create time:", delta / N * 1000, "ms")
 
-for atom in atomspace:
-    if not atom.incoming:
-        print(str(atom))
+# for atom in atomspace:
+#     if not atom.incoming:
+#         print(str(atom))
 
 delta = 0
 
@@ -40,6 +40,6 @@ for i in range(N):
     res = scheme_eval(atomspace, '(load "%s")' % file_query)
     delta += (time.time() - t)
 
-print("query time:", delta / N)
+print("query time:", delta / N * 1000, "ms")
 
 # print(res)
