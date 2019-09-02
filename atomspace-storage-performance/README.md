@@ -24,16 +24,20 @@ Evaluation
 ```
 
 Triple graph with parameter N consists of a list of triples (subject, predicate, object)
-where number of  
+where number of
+```text
 subjects: N  
 objects: N  
 predicates: N / 2  
 predicates per subject: N / 4
+```
 
 Example of a triple graph with N = 8:  
+```text
 subjects: subject-0,...,subject-7  
 objects: object-0,...,object-7  
 predicates: predicate-0,...,predicate-3  
+```
 triples:
 ```text
 (subject-4, predicate-0, object-4)
