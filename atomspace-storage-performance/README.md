@@ -1,11 +1,103 @@
 # AtomSpace backing storage performance
 
-## Neo4j
-
-The following 3 models are used to represent a triple (subject, predicate, object) in Neo4j graph:
+## Triple models and triple graph
+The following 3 models are used to represent a triple (subject, predicate, object) in graph:
 * Native Model
 * Predicate Model
 * Evaluation Model
+
+Native model connects two nodes subject and object by predicate link: 
+```cypher
+(subject)-[predicate]->(object)
+```
+PredicateModel: Predicate(Subject, Object)  
+EvaluationModel:
+```text
+Evaluation
+    Predicate "predicate"
+    List
+        Subject "subject"
+        Object  "object"
+```
+
+Triple graph with parameter N consists of a list of triples (subject, predicate, object)
+where number of  
+subjects: N  
+objects: N  
+predicates: N / 2  
+predicates per subject: N / 4
+
+Example of a triple graph with N = 8:  
+subjects: subject-0,...,subject-7  
+objects: object-0,...,object-7  
+predicates: predicate-0,...,predicate-3  
+triples:
+```text
+(subject-4, predicate-0, object-4)
+(subject-0, predicate-1, object-7)
+...
+(subject-6, predicate-3, object-7)
+```
+Triple graph with N = 8 in Native model:  
+![Triple graph](docs/images/triple_graph.png)
+
+
+## Atomspace
+
+### Predicate Model
+
+Stores triple (subject, predicate, object) in a way that predicate becomes 'PredicateLink' link
+with subject and object nodes.
+For example triple (Alice, likes, ice-cream) is stored as:
+```scheme
+(LikesLink
+  (Subject "Alice")
+  (Object "ice-cream"))
+```
+query to object:
+```scheme
+(LikesLink
+  (Subject "Alice")
+  (Object "ice-cream"))
+```
+### Evaluation Model
+
+Stores triple (subject, predicate, object) in EvaluationLink like:
+```scheme
+(EvaluationLink
+  (PredicateNode "likes")
+    (ListLink
+      (ConceptNode "Alice")
+      (ConceptNode "ice-cream")))
+```
+query to object:
+```scheme
+(EvaluationLink
+  (PredicateNode "likes")
+    (ListLink
+      (ConceptNode "Alice")
+      (VariableNode "$WHAT")))
+```
+### Creation and query performance
+
+Number in columns is the N parameter in the triple graph.
+
+Create time (ms)
+
+|Model     |  20   |  40   | 60    | 80     |
+|----------|-------|-------|-------|--------|
+|Predicate |3.40   |12.46  |29.70  |49.72   |
+|Evaluation|4.73   |18.65  |41.79  |82.18   |
+
+
+Query time (ms), number of queries is 50:
+
+|Model     |  20   |  40   | 60    | 80     |
+|----------|-------|-------|-------|--------|
+|Predicate |3.58   |3.72   |4.21   |4.42    |
+|Evaluation|4.62   |5.58   |5.93   |7.97    |
+
+## Neo4j
 
 ### Native Model
 
@@ -79,17 +171,7 @@ MATCH
 RETURN o.value
 ```
 
-### Triple graph creation and query performance 
-
-Triple graph with parameter N consists of a list of triples (subject, predicate, object)
-where number of  
-subjects: N  
-objects: N  
-predicates: N / 2  
-predicates per subject: N / 4
-
-Example of a triple graph with N = 8 in Native model:
-![Triple graph](docs/images/triple_graph.png)
+### Creation and query performance
 
 Number in columns is the N parameter in the triple graph.
 
@@ -112,58 +194,6 @@ Query time (ms), number of queries is 50:
 |Evaluation|69.75 |239.50|462.75|808.25|
 
 ![Query requests](docs/images/time_query.png)
-
-
-## Atomspace
-
-Predicate model.
-create:
-```scheme
-(LikesLink
-  (Subject "Alice")
-  (Object "ice-cream"))
-```
-query to object:
-```scheme
-(LikesLink
-  (Subject "Alice")
-  (Object "ice-cream"))
-```
-
-Evaluation model.
-create:
-```scheme
-(EvaluationLink
-  (PredicateNode "likes")
-    (ListLink
-      (ConceptNode "Alice")
-      (ConceptNode "ice-cream")))
-```
-query to object:
-```scheme
-(EvaluationLink
-  (PredicateNode "likes")
-    (ListLink
-      (ConceptNode "Alice")
-      (VariableNode "$WHAT")))
-```
-
-Number in columns is the N parameter in the triple graph.
-
-Create time (ms)
-
-|Model     |  20   |  40   | 60    | 80     |
-|----------|-------|-------|-------|--------|
-|Predicate |3.40   |12.46  |29.70  |49.72   |
-|Evaluation|4.73   |18.65  |41.79  |82.18   |
-
-
-Query time (ms), number of queries is 50:
-
-|Model     |  20   |  40   | 60    | 80     |
-|----------|-------|-------|-------|--------|
-|Predicate |3.58   |3.72   |4.21   | 4.42   |
-|Evaluation|4.62   |5.58   |5.93   |7.97   |
 
 
 ## Storages
