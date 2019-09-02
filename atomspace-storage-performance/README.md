@@ -10,8 +10,11 @@ Native model connects two nodes subject and object by predicate link:
 ```cypher
 (subject)-[predicate]->(object)
 ```
-PredicateModel: Predicate(Subject, Object)  
-EvaluationModel:
+Predicate model stores subject and object nodes in a hyper-edge represented by predicate link:
+```text
+Predicate(Subject, Object)
+```
+Evaluation model stores triple in Evaluation hyper-edge in a way:
 ```text
 Evaluation
     Predicate "predicate"
@@ -58,7 +61,7 @@ query to object:
 ```scheme
 (LikesLink
   (Subject "Alice")
-  (Object "ice-cream"))
+  (Variable "$WHAT"))
 ```
 ### Evaluation Model
 
