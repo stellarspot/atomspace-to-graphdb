@@ -12,13 +12,13 @@ public interface TripleAtomModel extends TripleModel {
     String TYPE_LIST = "ListLink";
     String TYPE_PREDICATE = "PredicateNode";
     String TYPE_CONCEPT = "ConceptNode";
-
-    String TYPE_INHERITANCE= "InheritanceLink";
+    String TYPE_SUBJECT = "SubjectNode";
+    String TYPE_OBJECT = "ObjectNode";
 
     static DBAtom toAtomPredicate(DBAtomSpace atomspace, Triple triple) {
-        return atomspace.getLink(TYPE_INHERITANCE,
-                atomspace.getNode(TYPE_CONCEPT, triple.subject),
-                atomspace.getNode(TYPE_CONCEPT, triple.object));
+        return atomspace.getLink(toLinkLabel(triple.predicate),
+                atomspace.getNode(TYPE_SUBJECT, triple.subject),
+                atomspace.getNode(TYPE_OBJECT, triple.object));
     }
 
 
@@ -41,6 +41,22 @@ public interface TripleAtomModel extends TripleModel {
             }
             handler.handleLinkEnd(link);
         }
+    }
+
+    static String toLinkLabel(String name) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(name.substring(0, 1).toUpperCase());
+        for (int i = 1; i < name.length(); i++) {
+            char c = name.charAt(i);
+            if (c == '-') {
+            } else if (Character.isDigit(c)) {
+                builder.append((char) ('a' + (int) (c - '0')));
+            } else {
+                builder.append(c);
+            }
+        }
+        builder.append("Link");
+        return builder.toString();
     }
 
     interface AtomHandler {

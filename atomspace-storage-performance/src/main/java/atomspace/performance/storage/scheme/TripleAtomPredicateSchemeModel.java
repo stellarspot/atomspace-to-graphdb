@@ -53,10 +53,11 @@ public class TripleAtomPredicateSchemeModel extends TripleAtomSchemeModel {
             Triple triple = triples.get(rand.nextInt(size));
             builder.append(String.format("" +
                             "(cog-execute! (Get\n" +
-                            "   (InheritanceLink\n" +
-                            "           (ConceptNode \"%s\")\n" +
+                            "   (%s\n" +
+                            "           (SubjectNode \"%s\")\n" +
                             "           (VariableNode \"$WHAT\"))\n" +
                             "))\n\n",
+                    TripleAtomModel.toLinkLabel(triple.predicate),
                     triple.subject));
         }
 

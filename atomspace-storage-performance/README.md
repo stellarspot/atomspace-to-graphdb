@@ -116,7 +116,22 @@ Query time (ms), number of queries is 50:
 
 ## Atomspace
 
-Create Evaluation link:
+Predicate model.
+create:
+```scheme
+(LikesLink
+  (Subject "Alice")
+  (Object "ice-cream"))
+```
+query to object:
+```scheme
+(LikesLink
+  (Subject "Alice")
+  (Object "ice-cream"))
+```
+
+Evaluation model.
+create:
 ```scheme
 (EvaluationLink
   (PredicateNode "likes")
@@ -124,8 +139,7 @@ Create Evaluation link:
       (ConceptNode "Alice")
       (ConceptNode "ice-cream")))
 ```
-
-Query to object:
+query to object:
 ```scheme
 (EvaluationLink
   (PredicateNode "likes")
@@ -140,6 +154,7 @@ Create time (ms)
 
 |Model     |  20   |  40   | 60    | 80     |
 |----------|-------|-------|-------|--------|
+|Predicate |3.40   |12.46  |29.70  |49.72   |
 |Evaluation|4.73   |18.65  |41.79  |82.18   |
 
 
@@ -147,6 +162,7 @@ Query time (ms), number of queries is 50:
 
 |Model     |  20   |  40   | 60    | 80     |
 |----------|-------|-------|-------|--------|
+|Predicate |3.58   |3.72   |4.21   | 4.42   |
 |Evaluation|4.62   |5.58   |5.93   |7.97   |
 
 
