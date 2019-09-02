@@ -2,19 +2,9 @@ package sample.performance.scheme;
 
 import atomspace.performance.storage.TripleAtomModel;
 import atomspace.performance.storage.TripleModel;
-import atomspace.performance.storage.neo4j.*;
-import atomspace.performance.storage.scheme.TripleAtomEvaluationSchemeModel;
 import atomspace.performance.storage.scheme.TripleAtomPredicateSchemeModel;
-import atomspace.performance.storage.scheme.TripleAtomSchemeModel;
-import atomspace.performance.triple.FixedTripleGraph;
-import atomspace.performance.triple.RandomTripleGraph;
-import atomspace.performance.triple.Triple;
 import atomspace.performance.triple.TripleGraph;
-import org.apache.commons.lang3.time.StopWatch;
-import sample.performance.PerformanceTripleGraph;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import sample.performance.neo4j.PerformanceTripleGraph;
 
 public class PerformanceSampleScheme {
     public static void main(String[] args) throws Exception {

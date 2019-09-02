@@ -89,6 +89,7 @@ Create time (ms)
 |Predicate |3.40   |12.46  |29.70  |49.72   |
 |Evaluation|4.73   |18.65  |41.79  |82.18   |
 
+![Atomspace time create](docs/images/atomspace_time_create.png)
 
 Query time (ms), number of queries is 50:
 
@@ -96,6 +97,8 @@ Query time (ms), number of queries is 50:
 |----------|-------|-------|-------|--------|
 |Predicate |3.58   |3.72   |4.21   |4.42    |
 |Evaluation|4.62   |5.58   |5.93   |7.97    |
+
+![Atomspace time query](docs/images/atomspace_time_query.png)
 
 ## Neo4j
 
@@ -183,7 +186,7 @@ Create time (ms)
 |Predicate |82.00  |549.00 |2291.25|6539.75 |
 |Evaluation|159.75 |1614.50|7217.75|22171.00|
 
-![Create requests](docs/images/time_create.png)
+![Neo4j create requests](docs/images/time_create.png)
 
 Query time (ms), number of queries is 50:
 
@@ -193,7 +196,7 @@ Query time (ms), number of queries is 50:
 |Predicate |37.50 |62.75 |91.50 |154.00|
 |Evaluation|69.75 |239.50|462.75|808.25|
 
-![Query requests](docs/images/time_query.png)
+![Neo4j query requests](docs/images/time_query.png)
 
 
 ## Storages

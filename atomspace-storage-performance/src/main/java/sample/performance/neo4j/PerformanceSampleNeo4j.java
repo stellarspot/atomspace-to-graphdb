@@ -1,4 +1,4 @@
-package sample.performance;
+package sample.performance.neo4j;
 
 import atomspace.performance.storage.neo4j.*;
 import atomspace.performance.triple.RandomTripleGraph;

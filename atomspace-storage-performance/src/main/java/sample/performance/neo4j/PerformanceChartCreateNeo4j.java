@@ -1,4 +1,4 @@
-package sample.performance;
+package sample.performance.neo4j;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
