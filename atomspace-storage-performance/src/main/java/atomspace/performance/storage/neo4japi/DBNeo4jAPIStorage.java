@@ -2,7 +2,6 @@ package atomspace.performance.storage.neo4japi;
 
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
-import org.neo4j.io.fs.FileUtils;
 
 import java.io.Closeable;
 import java.io.File;
@@ -24,6 +23,16 @@ public class DBNeo4jAPIStorage implements Closeable {
         graph = new GraphDatabaseFactory().newEmbeddedDatabase(this.databaseDirectory);
     }
 
+    public Node getOrCreate(Label label, String key, String value) {
+
+        Node node = graph.findNode(label, key, value);
+        if (node == null) {
+            node = graph.createNode();
+            node.addLabel(label);
+            node.setProperty(key, value);
+        }
+        return node;
+    }
 
     public void dump() {
         try (Transaction tx = graph.beginTx()) {
@@ -53,7 +62,7 @@ public class DBNeo4jAPIStorage implements Closeable {
         graph.shutdown();
     }
 
-    private static String toString(Node node) {
+    public static String toString(Node node) {
 
         String type = "Unknown";
 
@@ -67,7 +76,7 @@ public class DBNeo4jAPIStorage implements Closeable {
         return String.format("%s('%s')", type, value);
     }
 
-    private static String toString(Relationship relationship) {
+    public static String toString(Relationship relationship) {
         String type = relationship.getType().name();
         String start = toString(relationship.getStartNode());
         String end = toString(relationship.getEndNode());

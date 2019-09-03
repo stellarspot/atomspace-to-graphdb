@@ -23,21 +23,13 @@ public class SampleNeo4jAPI {
             TripleGraph tripleGraph = new FixedTripleGraph(
                     new Triple("Alice", "likes", "ice-cream"),
                     new Triple("Alice", "likes", "apple"),
+                    new Triple("Alice", "dislikes", "pear"),
                     new Triple("Bob", "likes", "apple")
             );
 
 
 //            int N = 8;
 //            RandomTripleGraph tripleGraph = new RandomTripleGraph(N, N / 2, N, N / 4);
-
-            List<String> p = new ArrayList<>();
-            p.addAll(tripleGraph.getPredicates());
-            Collections.sort(p);
-
-            for (String predicate : p) {
-                String s = predicate.replace('-', '_');
-                System.out.printf("%s,%n", s.toUpperCase());
-            }
 
             TripleNeo4jAPIModel model = new TripleNativeNeo4jAPIModel(storage, tripleGraph);
 //            TripleNeo4jModel model = new TripleAtomPredicateNeo4jModel(storage, tripleGraph);
@@ -48,7 +40,7 @@ public class SampleNeo4jAPI {
             storage.clearDB();
             model.storeTriples();
 
-            storage.dump();
+//            storage.dump();
 
             List<String> objects = model.queryObject();
             for (String obj : objects) {
