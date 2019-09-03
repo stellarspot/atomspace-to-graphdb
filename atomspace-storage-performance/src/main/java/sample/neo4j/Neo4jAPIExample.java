@@ -18,6 +18,9 @@ public class Neo4jAPIExample {
         addPredicate(graph, "Alice", "likes", "ice-cream");
 
         printPredicates(graph);
+
+        clearGraph(graph);
+        printPredicates(graph);
     }
 
     private static void addPredicate(GraphDatabaseService graph, String subject, String predicate, String object) {
@@ -68,6 +71,18 @@ public class Neo4jAPIExample {
         String start = toString(relationship.getStartNode());
         String end = toString(relationship.getEndNode());
         return String.format("%s(%s,%s)", type, start, end);
+    }
+
+    private static void clearGraph(GraphDatabaseService graph) {
+        try (Transaction tx = graph.beginTx()) {
+            for (Relationship r : graph.getAllRelationships()) {
+                r.delete();
+            }
+            for (Node n : graph.getAllNodes()) {
+                n.delete();
+            }
+            tx.success();
+        }
     }
 
     private enum RelTypes implements RelationshipType {

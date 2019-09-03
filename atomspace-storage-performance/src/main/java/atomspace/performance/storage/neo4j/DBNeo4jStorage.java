@@ -3,7 +3,6 @@ package atomspace.performance.storage.neo4j;
 import org.neo4j.driver.v1.*;
 
 import java.io.Closeable;
-import java.io.IOException;
 
 public class DBNeo4jStorage implements Closeable {
 
@@ -27,7 +26,7 @@ public class DBNeo4jStorage implements Closeable {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         driver.close();
     }
 }
