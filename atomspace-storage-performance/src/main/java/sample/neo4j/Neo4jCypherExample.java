@@ -1,14 +1,14 @@
-package sample;
+package sample.neo4j;
 
 import org.neo4j.driver.v1.*;
 
 import static org.neo4j.driver.v1.Values.parameters;
 
-public class Neo4jExample {
+public class Neo4jCypherExample {
     // Driver objects are thread-safe and are typically made available application-wide.
     Driver driver;
 
-    public Neo4jExample(String uri, String user, String password) {
+    public Neo4jCypherExample(String uri, String user, String password) {
         driver = GraphDatabase.driver(uri, AuthTokens.basic(user, password));
     }
 
@@ -45,7 +45,7 @@ public class Neo4jExample {
     }
 
     public static void main(String... args) {
-        Neo4jExample example = new Neo4jExample("bolt://localhost:7687", "neo4j", "test");
+        Neo4jCypherExample example = new Neo4jCypherExample("bolt://localhost:7687", "neo4j", "test");
         example.addPerson("Ada");
         example.addPerson("Alice");
         example.addPerson("Bob");

@@ -1,4 +1,4 @@
-package sample;
+package sample.ontology;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.RDFJsonDocumentFormat;
