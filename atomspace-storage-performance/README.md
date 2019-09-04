@@ -229,7 +229,6 @@ Query time (ms), number of queries is 50:
 
 ![Neo4j query requests](docs/images/time_query_neo4j_api.png)
 
-
 ## Storages
 
 ### Neo4j
