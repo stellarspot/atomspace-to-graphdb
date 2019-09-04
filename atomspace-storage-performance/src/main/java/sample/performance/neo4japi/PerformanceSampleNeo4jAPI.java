@@ -23,7 +23,7 @@ public class PerformanceSampleNeo4jAPI {
 //                    new Triple("Bob", "likes", "apple")
 //            );
 
-            int N = 8;
+            int N = 20;
             int subjectsNumber = N;
             int predicatesNumber = N / 2;
             int objectsNumber = N;
@@ -35,12 +35,13 @@ public class PerformanceSampleNeo4jAPI {
                     objectsNumber,
                     predicatesPerSubjectNumber);
 
-//            TripleNeo4jAPIModel nativeModel = new TripleNativeNeo4jAPIModel(storage, tripleGraph);
-//            TripleNeo4jAPIModel predicateModel = new TripleAtomPredicateNeo4jAPIModel(storage, tripleGraph);
+            TripleNeo4jAPIModel nativeModel = new TripleNativeNeo4jAPIModel(storage, tripleGraph);
+            TripleNeo4jAPIModel predicateModel = new TripleAtomPredicateNeo4jAPIModel(storage, tripleGraph);
             TripleNeo4jAPIModel evaluationModel = new TripleAtomEvaluationNeo4jAPIModel(storage, tripleGraph);
 
-            measureRequests(storage, tripleGraph, 4, evaluationModel/*, predicateModel, evaluationModel*/);
+            measureRequests(storage, tripleGraph, 4, nativeModel);
 //            measureRequests(storage, tripleGraph, 4, nativeModel, predicateModel, evaluationModel);
+//            measureRequests(storage, tripleGraph, 4, evaluationModel, nativeModel, predicateModel, evaluationModel);
         }
     }
 
@@ -68,9 +69,9 @@ public class PerformanceSampleNeo4jAPI {
                 List<String> objects = model.queryObjects(queryNumbers);
                 queryWatch.suspend();
                 System.out.printf("objects: %d%n", objects.size());
-                for (String obj : objects) {
-                    System.out.printf("Object: %s%n", obj);
-                }
+//                for (String obj : objects) {
+//                    System.out.printf("Object: %s%n", obj);
+//                }
             }
 
             queryWatch.stop();

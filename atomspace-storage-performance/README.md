@@ -181,7 +181,7 @@ MATCH
 RETURN o.value
 ```
 
-### Creation and query performance
+### Creation and query performance using Cypher
 
 Number in columns is the N parameter in the triple graph.
 
@@ -204,6 +204,30 @@ Query time (ms), number of queries is 50:
 |Evaluation|69.75 |239.50|462.75|808.25|
 
 ![Neo4j query requests](docs/images/time_query.png)
+
+### Creation and query performance using Java API
+
+Number in columns is the N parameter in the triple graph.
+
+Create time (ms)
+
+|Model     |  20   |  40   | 60    | 80    |
+|----------|-------|-------|-------|-------|
+|Native    |31.00  |46.50  |81.25  |162.75 |
+|Predicate |40.00  |73.00  |122.25 |233.25 |
+|Evaluation|62.75  |128.75 |330.25 |856.75 |
+
+![Neo4j create requests](docs/images/time_create_neo4j_api.png)
+
+Query time (ms), number of queries is 50:
+
+|Model     |  20  |  40  | 60   | 80  |
+|----------|------|------|------|-----|
+|Native    |5.00  |4.50  |5.00  |6.75 |
+|Predicate |6.75  |6.75  |8.00  |8.00 |
+|Evaluation|11.25 |13.00 |11.75 |11.75|
+
+![Neo4j query requests](docs/images/time_query_neo4j_api.png)
 
 
 ## Storages

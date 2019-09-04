@@ -27,7 +27,7 @@ public class TripleAtomEvaluationNeo4jAPIModel extends TripleAtomNeo4jAPIModel {
 
     @Override
     public String getName() {
-        return "Predicate";
+        return "Evaluation";
     }
 
     @Override
