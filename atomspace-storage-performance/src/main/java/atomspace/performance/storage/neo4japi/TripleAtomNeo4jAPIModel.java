@@ -4,18 +4,11 @@ import atomspace.performance.DBAtom;
 import atomspace.performance.DBAtomSpace;
 import atomspace.performance.DBLink;
 import atomspace.performance.DBNode;
-import atomspace.performance.storage.neo4j.DBNeo4jStorage;
-import atomspace.performance.storage.neo4j.TripleNeo4jModel;
 import atomspace.performance.triple.Triple;
 import atomspace.performance.triple.TripleGraph;
-import org.neo4j.driver.v1.Session;
-import org.neo4j.driver.v1.Transaction;
 import org.neo4j.graphdb.*;
 
-import java.util.List;
-
-import static org.neo4j.driver.v1.Values.ofRelationship;
-import static org.neo4j.driver.v1.Values.parameters;
+import java.util.Iterator;
 
 public abstract class TripleAtomNeo4jAPIModel extends TripleNeo4jAPIModel {
 
@@ -47,10 +40,9 @@ public abstract class TripleAtomNeo4jAPIModel extends TripleNeo4jAPIModel {
 
             tx.success();
         }
-
     }
 
-    protected Node putAtom(DBAtom atom) {
+    protected LookupNode putAtom(DBAtom atom) {
 
         if (atom instanceof DBNode) {
             return putNode((DBNode) atom);
@@ -61,8 +53,7 @@ public abstract class TripleAtomNeo4jAPIModel extends TripleNeo4jAPIModel {
         throw new RuntimeException("Unknown aom type!");
     }
 
-
-    protected Node putNode(DBNode node) {
+    protected LookupNode putNode(DBNode node) {
 
         GraphDatabaseService graph = storage.graph;
         Label nodeLabel = Label.label(node.type);
@@ -73,37 +64,50 @@ public abstract class TripleAtomNeo4jAPIModel extends TripleNeo4jAPIModel {
             n.addLabel(nodeLabel);
             n.setProperty("id", node.id);
             n.setProperty("value", node.value);
+            return new LookupNode(false, n);
         }
 
-        return n;
+        return new LookupNode(true, n);
     }
 
-    protected Node putLink(DBLink link) {
+    protected LookupNode putLink(DBLink link) {
 
         GraphDatabaseService graph = storage.graph;
 
         Label linkLabel = Label.label(link.type);
         Node n = graph.findNode(linkLabel, "id", link.id);
 
-        if (n == null) {
-            n = graph.createNode();
-            n.addLabel(ATOM_LABEL);
-            n.addLabel(linkLabel);
-            n.setProperty("id", link.id);
+        if (n != null) {
+            return new LookupNode(true, n);
         }
+
+        n = graph.createNode();
+        n.addLabel(ATOM_LABEL);
+        n.addLabel(linkLabel);
+        n.setProperty("id", link.id);
 
 
         for (int i = 0; i < link.atoms.length; i++) {
             DBAtom atom = link.atoms[i];
-            Node child = putAtom(atom);
+            Node child = putAtom(atom).node;
             Relationship relationship = n.createRelationshipTo(child, getArgType(i));
         }
 
-        return n;
+        return new LookupNode(false, n);
     }
 
     protected static RelationshipType getArgType(int position) {
         return RelationshipType.withName(String.format("%s_%d", ARG_TYPE, position));
 
+    }
+
+    static class LookupNode {
+        final boolean existed;
+        final Node node;
+
+        public LookupNode(boolean existed, Node node) {
+            this.existed = existed;
+            this.node = node;
+        }
     }
 }

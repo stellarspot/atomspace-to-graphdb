@@ -1,10 +1,7 @@
 package sample.performance.neo4japi;
 
 import atomspace.performance.storage.neo4j.*;
-import atomspace.performance.storage.neo4japi.DBNeo4jAPIStorage;
-import atomspace.performance.storage.neo4japi.TripleAtomPredicateNeo4jAPIModel;
-import atomspace.performance.storage.neo4japi.TripleNativeNeo4jAPIModel;
-import atomspace.performance.storage.neo4japi.TripleNeo4jAPIModel;
+import atomspace.performance.storage.neo4japi.*;
 import atomspace.performance.triple.RandomTripleGraph;
 import atomspace.performance.triple.TripleGraph;
 import org.apache.commons.lang3.time.StopWatch;
@@ -26,7 +23,7 @@ public class PerformanceSampleNeo4jAPI {
 //                    new Triple("Bob", "likes", "apple")
 //            );
 
-            int N = 20;
+            int N = 8;
             int subjectsNumber = N;
             int predicatesNumber = N / 2;
             int objectsNumber = N;
@@ -39,10 +36,10 @@ public class PerformanceSampleNeo4jAPI {
                     predicatesPerSubjectNumber);
 
 //            TripleNeo4jAPIModel nativeModel = new TripleNativeNeo4jAPIModel(storage, tripleGraph);
-            TripleNeo4jAPIModel predicateModel = new TripleAtomPredicateNeo4jAPIModel(storage, tripleGraph);
-//            TripleNeo4jModel evaluationModel = new TripleAtomEvaluationNeo4jModel(storage, tripleGraph);
+//            TripleNeo4jAPIModel predicateModel = new TripleAtomPredicateNeo4jAPIModel(storage, tripleGraph);
+            TripleNeo4jAPIModel evaluationModel = new TripleAtomEvaluationNeo4jAPIModel(storage, tripleGraph);
 
-            measureRequests(storage, tripleGraph, 4, predicateModel/*, predicateModel, evaluationModel*/);
+            measureRequests(storage, tripleGraph, 4, evaluationModel/*, predicateModel, evaluationModel*/);
 //            measureRequests(storage, tripleGraph, 4, nativeModel, predicateModel, evaluationModel);
         }
     }
