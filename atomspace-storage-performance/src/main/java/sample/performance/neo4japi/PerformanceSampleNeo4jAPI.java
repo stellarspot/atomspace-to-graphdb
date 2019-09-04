@@ -2,6 +2,7 @@ package sample.performance.neo4japi;
 
 import atomspace.performance.storage.neo4j.*;
 import atomspace.performance.storage.neo4japi.DBNeo4jAPIStorage;
+import atomspace.performance.storage.neo4japi.TripleAtomPredicateNeo4jAPIModel;
 import atomspace.performance.storage.neo4japi.TripleNativeNeo4jAPIModel;
 import atomspace.performance.storage.neo4japi.TripleNeo4jAPIModel;
 import atomspace.performance.triple.RandomTripleGraph;
@@ -37,11 +38,12 @@ public class PerformanceSampleNeo4jAPI {
                     objectsNumber,
                     predicatesPerSubjectNumber);
 
-            TripleNeo4jAPIModel nativeModel = new TripleNativeNeo4jAPIModel(storage, tripleGraph);
-//            TripleNeo4jModel predicateModel = new TripleAtomPredicateNeo4jModel(storage, tripleGraph);
+//            TripleNeo4jAPIModel nativeModel = new TripleNativeNeo4jAPIModel(storage, tripleGraph);
+            TripleNeo4jAPIModel predicateModel = new TripleAtomPredicateNeo4jAPIModel(storage, tripleGraph);
 //            TripleNeo4jModel evaluationModel = new TripleAtomEvaluationNeo4jModel(storage, tripleGraph);
 
-            measureRequests(storage, tripleGraph, 4, nativeModel/*, predicateModel, evaluationModel*/);
+            measureRequests(storage, tripleGraph, 4, predicateModel/*, predicateModel, evaluationModel*/);
+//            measureRequests(storage, tripleGraph, 4, nativeModel, predicateModel, evaluationModel);
         }
     }
 
@@ -68,10 +70,10 @@ public class PerformanceSampleNeo4jAPI {
                 queryWatch.resume();
                 List<String> objects = model.queryObjects(queryNumbers);
                 queryWatch.suspend();
-//                System.out.printf("objects: %d%n", objects.size());
-//                for (String obj : objects) {
-//                    System.out.printf("Object: %s%n", obj);
-//                }
+                System.out.printf("objects: %d%n", objects.size());
+                for (String obj : objects) {
+                    System.out.printf("Object: %s%n", obj);
+                }
             }
 
             queryWatch.stop();

@@ -1,15 +1,12 @@
 package sample.performance.neo4japi;
 
 import atomspace.performance.storage.neo4japi.DBNeo4jAPIStorage;
-import atomspace.performance.storage.neo4japi.TripleNativeNeo4jAPIModel;
+import atomspace.performance.storage.neo4japi.TripleAtomPredicateNeo4jAPIModel;
 import atomspace.performance.storage.neo4japi.TripleNeo4jAPIModel;
 import atomspace.performance.triple.FixedTripleGraph;
-import atomspace.performance.triple.RandomTripleGraph;
 import atomspace.performance.triple.Triple;
 import atomspace.performance.triple.TripleGraph;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class SampleNeo4jAPI {
@@ -31,8 +28,8 @@ public class SampleNeo4jAPI {
 //            int N = 8;
 //            RandomTripleGraph tripleGraph = new RandomTripleGraph(N, N / 2, N, N / 4);
 
-            TripleNeo4jAPIModel model = new TripleNativeNeo4jAPIModel(storage, tripleGraph);
-//            TripleNeo4jModel model = new TripleAtomPredicateNeo4jModel(storage, tripleGraph);
+//            TripleNeo4jAPIModel model = new TripleNativeNeo4jAPIModel(storage, tripleGraph);
+            TripleNeo4jAPIModel model = new TripleAtomPredicateNeo4jAPIModel(storage, tripleGraph);
 //            TripleNeo4jModel model = new TripleAtomEvaluationNeo4jModel(storage, tripleGraph);
 
 
@@ -43,6 +40,7 @@ public class SampleNeo4jAPI {
 //            storage.dump();
 
             List<String> objects = model.queryObject();
+//            System.out.printf("objects: %d%n", objects.size());
             for (String obj : objects) {
                 System.out.printf("Object: %s%n", obj);
             }

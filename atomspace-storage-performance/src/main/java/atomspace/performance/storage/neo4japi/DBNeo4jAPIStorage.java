@@ -23,7 +23,7 @@ public class DBNeo4jAPIStorage implements Closeable {
         graph = new GraphDatabaseFactory().newEmbeddedDatabase(this.databaseDirectory);
     }
 
-    public Node getOrCreate(Label label, String key, String value) {
+    public Node getOrCreate(Label label, String key, Object value) {
 
         Node node = graph.findNode(label, key, value);
         if (node == null) {
@@ -35,7 +35,13 @@ public class DBNeo4jAPIStorage implements Closeable {
     }
 
     public void dump() {
+        System.out.printf("--- Dump ---%n");
         try (Transaction tx = graph.beginTx()) {
+
+//            for (Node n : graph.getAllNodes()) {
+//                System.out.println(toString(n));
+//            }
+
 
             for (Relationship r : graph.getAllRelationships()) {
                 System.out.println(toString(r));
@@ -43,6 +49,7 @@ public class DBNeo4jAPIStorage implements Closeable {
 
             tx.success();
         }
+        System.out.printf("--- ---- ---%n");
     }
 
     public void clearDB() {
@@ -68,19 +75,36 @@ public class DBNeo4jAPIStorage implements Closeable {
 
         for (Label label : node.getLabels()) {
             type = label.name();
+            if (type.equals("Atom")) {
+                continue;
+            }
             break;
         }
 
-        String value = node.getProperty("value").toString();
+        if (node.hasProperty("value")) {
+            String value = node.getProperty("value").toString();
+            return String.format("%s('%s')", type, value);
+        }
 
-        return String.format("%s('%s')", type, value);
+        if (node.hasProperty("id")) {
+            String value = node.getProperty("id").toString();
+            return String.format("%s('%s')", type, value);
+        }
+
+        return String.format("%s()", type);
     }
 
     public static String toString(Relationship relationship) {
         String type = relationship.getType().name();
         String start = toString(relationship.getStartNode());
         String end = toString(relationship.getEndNode());
-        return String.format("%s(%s,%s)", type, start, end);
+
+        if (relationship.hasProperty("position")) {
+            String position = relationship.getProperty("position").toString();
+            return String.format("(%s) - [%s {position: '%s'}] -> (%s)", start, type, position, end);
+        }
+
+        return String.format("(%s) - [%s] -> (%s)", start, type, end);
     }
 
 }

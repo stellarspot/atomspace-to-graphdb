@@ -8,9 +8,6 @@ import java.util.*;
 
 public class TripleNativeNeo4jAPIModel extends TripleNeo4jAPIModel {
 
-    private static final Label SUBJECT_LABEL = Label.label("SubjectNode");
-    private static final Label OBJECT_LABEL = Label.label("ObjectNode");
-
     public TripleNativeNeo4jAPIModel(TripleGraph tripleGraph) {
         super(tripleGraph);
     }
