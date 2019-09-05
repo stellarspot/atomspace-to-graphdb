@@ -1,13 +1,13 @@
 package atomspace.performance.storage.neo4japi;
 
+import atomspace.performance.storage.DBStorage;
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
-public class DBNeo4jAPIStorage implements Closeable {
+public class DBNeo4jAPIStorage implements DBStorage {
 
 
     final File databaseDirectory;
@@ -52,6 +52,7 @@ public class DBNeo4jAPIStorage implements Closeable {
         System.out.printf("--- ---- ---%n");
     }
 
+    @Override
     public void clearDB() {
         try (Transaction tx = graph.beginTx()) {
             for (Relationship r : graph.getAllRelationships()) {

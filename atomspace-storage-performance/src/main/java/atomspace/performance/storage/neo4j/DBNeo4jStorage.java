@@ -1,10 +1,9 @@
 package atomspace.performance.storage.neo4j;
 
+import atomspace.performance.storage.DBStorage;
 import org.neo4j.driver.v1.*;
 
-import java.io.Closeable;
-
-public class DBNeo4jStorage implements Closeable {
+public class DBNeo4jStorage implements DBStorage {
 
     final Driver driver;
 
