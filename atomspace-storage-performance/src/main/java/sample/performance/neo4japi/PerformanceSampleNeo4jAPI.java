@@ -9,18 +9,19 @@ public class PerformanceSampleNeo4jAPI {
 
         try (DBNeo4jAPIStorage storage = new DBNeo4jAPIStorage()) {
 
-            int N = 20;
-            int iterations = 4;
+            int N = 100;
+            int statements = 20;
+            int queries = 20;
 
-            TripleGraph tripleGraph = TestTripleGraphs.getTripleGraph3();
-//            TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N);
+//            TripleGraph tripleGraph = TestTripleGraphs.getTripleGraph3();
+            TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N, statements);
 
             TripleNeo4jAPIModel nativeModel = new TripleNativeNeo4jAPIModel(storage, tripleGraph);
             TripleNeo4jAPIModel predicateModel = new TripleAtomPredicateNeo4jAPIModel(storage, tripleGraph);
             TripleNeo4jAPIModel evaluationModel = new TripleAtomEvaluationNeo4jAPIModel(storage, tripleGraph);
 
             System.out.printf("triples: %s%n", tripleGraph.getStatistics());
-            TestTripleGraphs.runRequests(storage, 4, false, nativeModel, predicateModel, evaluationModel);
+            TestTripleGraphs.runRequests(storage, queries, false, nativeModel, predicateModel, evaluationModel);
         }
     }
 }

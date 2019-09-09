@@ -28,33 +28,42 @@ public class TestTripleGraphs {
                 new Triple("Bob", "likes", "apple"));
     }
 
-    public static TripleGraph getRandomTripleGraph(int N) {
+    public static TripleGraph getRandomTripleGraph(int N, int statements) {
         int subjectsNumber = N;
-        int predicatesNumber = N / 2;
+        int predicatesNumber = N / 4;
         int objectsNumber = N;
-        int predicatesPerSubjectNumber = N / 4;
 
         return new RandomTripleGraph(
                 subjectsNumber,
                 predicatesNumber,
                 objectsNumber,
-                predicatesPerSubjectNumber);
+                statements);
     }
 
 
     public static void runRequests(DBStorage storage,
-                                   int iterations,
+                                   int queries,
                                    boolean showQueries,
                                    TripleModel... models) {
-        System.out.printf("iterations: %d%n", iterations);
         TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+
+        int totalObjects = 0;
+        int iterations = 4;
+
+        System.out.printf("iterations: %d%n", iterations);
+
+        for (TripleModel model : models) {
+            storage.clearDB();
+            model.storeTriples();
+            List<String> objects = model.queryObjects(queries);
+            totalObjects += objects.size();
+        }
 
         for (TripleModel model : models) {
 
             StopWatch createWatch = createAndInitStopWatch();
             StopWatch queryWatch = createAndInitStopWatch();
 
-            int queryNumbers = 50;
 
             for (int i = 0; i < iterations; i++) {
                 storage.clearDB();
@@ -62,7 +71,8 @@ public class TestTripleGraphs {
                 model.storeTriples();
                 createWatch.suspend();
                 queryWatch.resume();
-                List<String> objects = model.queryObjects(queryNumbers);
+                List<String> objects = model.queryObjects(queries);
+                totalObjects += objects.size();
                 queryWatch.suspend();
                 if (showQueries) {
                     System.out.printf("objects: %d%n", objects.size());
@@ -74,10 +84,13 @@ public class TestTripleGraphs {
 
             queryWatch.stop();
 
-            float createTime = (float) createWatch.getTime(timeUnit) / iterations;
-            float queryTime = (float) queryWatch.getTime(timeUnit) / iterations;
+            float createTime = ((float) createWatch.getTime(timeUnit)) / iterations;
+            float queryTime = ((float) queryWatch.getTime(timeUnit)) / iterations;
             System.out.printf("model: %s, create: %.2f, query: %.2f%n", model.getName(), createTime, queryTime);
         }
+
+        System.out.printf("%n");
+        System.out.printf("total query objects: %d%n", totalObjects);
     }
 
     private static StopWatch createAndInitStopWatch() {

@@ -8,8 +8,11 @@ import sample.performance.TestTripleGraphs;
 public class PerformanceSampleScheme {
     public static void main(String[] args) throws Exception {
 
-        int N = 20;
-        TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N);
+        int N = 100;
+        int statements = 20;
+        int queries = 20;
+
+        TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N, statements);
 
 //        for (String predicate : tripleGraph.getPredicates()) {
 //            String link = TripleAtomModel.toLinkLabel(predicate);
@@ -20,8 +23,6 @@ public class PerformanceSampleScheme {
 
         TripleModel model = new TripleAtomPredicateSchemeModel("as", tripleGraph);
 //        TripleModel model = new TripleAtomEvaluationSchemeModel("as", tripleGraph);
-
-        int queries = 50;
 
         model.storeTriples();
         model.queryObjects(queries);

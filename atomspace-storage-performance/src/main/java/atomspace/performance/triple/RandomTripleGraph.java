@@ -8,7 +8,7 @@ public class RandomTripleGraph extends TripleGraph {
     public final int subjectsNumber;
     public final int predicatesNumber;
     public final int objectsNumber;
-    public final int predicatesPerSubjectNumber;
+    public final int statements;
 
 
     public RandomTripleGraph() {
@@ -18,11 +18,11 @@ public class RandomTripleGraph extends TripleGraph {
     public RandomTripleGraph(int subjectsNumber,
                              int predicatesNumber,
                              int objectsNumber,
-                             int predicatesPerSubjectNumber) {
+                             int statements) {
         this.subjectsNumber = subjectsNumber;
         this.predicatesNumber = predicatesNumber;
         this.objectsNumber = objectsNumber;
-        this.predicatesPerSubjectNumber = predicatesPerSubjectNumber;
+        this.statements = statements;
         initGraph();
     }
 
@@ -37,14 +37,12 @@ public class RandomTripleGraph extends TripleGraph {
         initSet(objects, "object", objectsNumber);
         initSet(predicates, "predicate", predicatesNumber);
 
-        for (int i = 0; i < subjectsNumber; i++) {
-            for (int j = 0; j < predicatesPerSubjectNumber; j++) {
-                while (true) {
-                    Triple triple = generateTriple(rand);
-                    if (!triples.contains(triple)) {
-                        addTriple(triple);
-                        break;
-                    }
+        for (int i = 0; i < statements; i++) {
+            while (true) {
+                Triple triple = generateTriple(rand);
+                if (!triples.contains(triple)) {
+                    addTriple(triple);
+                    break;
                 }
             }
         }

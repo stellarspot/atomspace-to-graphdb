@@ -16,12 +16,12 @@ public class RandomTripleGraphTest {
         int subjects = 4;
         int predicates = 3;
         int objects = 3;
-        int predicatesPerObject = 2;
+        int statements = 5;
 
-        TripleGraph tripleGraph = new RandomTripleGraph(subjects, predicates, objects, predicatesPerObject);
+        TripleGraph tripleGraph = new RandomTripleGraph(subjects, predicates, objects, statements);
         Set<Triple> triples = tripleGraph.getTriples();
         Assert.assertEquals(subjects, tripleGraph.getSubjects().size());
         Assert.assertEquals(objects, tripleGraph.getObjects().size());
-        Assert.assertEquals(subjects * predicatesPerObject, triples.size());
+        Assert.assertEquals(statements, triples.size());
     }
 }
