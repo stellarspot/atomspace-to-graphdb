@@ -10,7 +10,9 @@ import atomspace.performance.triple.Triple;
 import atomspace.performance.triple.TripleGraph;
 import org.apache.commons.lang3.time.StopWatch;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class TestTripleGraphs {
@@ -52,6 +54,9 @@ public class TestTripleGraphs {
 
         System.out.printf("iterations: %d%n", iterations);
 
+        Map<String, Double> createTimeMap = new HashMap<>();
+        Map<String, Double> queryTimeMap = new HashMap<>();
+
         for (TripleModel model : models) {
             storage.clearDB();
             model.storeTriples();
@@ -84,9 +89,12 @@ public class TestTripleGraphs {
 
             queryWatch.stop();
 
-            float createTime = ((float) createWatch.getTime(timeUnit)) / iterations;
-            float queryTime = ((float) queryWatch.getTime(timeUnit)) / iterations;
+            double createTime = ((double) createWatch.getTime(timeUnit)) / iterations;
+            double queryTime = ((double) queryWatch.getTime(timeUnit)) / iterations;
             System.out.printf("model: %s, create: %.2f, query: %.2f%n", model.getName(), createTime, queryTime);
+
+            createTimeMap.put(model.getName(), createTime);
+            queryTimeMap.put(model.getName(), queryTime);
         }
 
         System.out.printf("%n");

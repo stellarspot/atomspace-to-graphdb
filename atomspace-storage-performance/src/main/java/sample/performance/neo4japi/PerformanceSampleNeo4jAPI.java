@@ -9,9 +9,9 @@ public class PerformanceSampleNeo4jAPI {
 
         try (DBNeo4jAPIStorage storage = new DBNeo4jAPIStorage()) {
 
-            int N = 100;
-            int statements = 20;
-            int queries = 20;
+            int N = 500;
+            int statements = 500;
+            int queries = 2000;
 
 //            TripleGraph tripleGraph = TestTripleGraphs.getTripleGraph3();
             TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N, statements);

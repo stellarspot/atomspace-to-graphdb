@@ -23,26 +23,26 @@ Evaluation
         Object  "object"
 ```
 
-Triple graph with parameter N consists of a list of triples (subject, predicate, object)
+Triple graph with number of nodes N and number of statements S consists of a list of triples (subject, predicate, object)
 where number of
 ```text
 subjects: N  
 objects: N  
-predicates: N / 2  
-predicates per subject: N / 4
+predicates: N / 4
+predicates per subject: S
 ```
 
-Example of a triple graph with N = 8:  
+Example of a triple graph with N = 8 and S = 4:
 ```text
 subjects: subject-0,...,subject-7  
 objects: object-0,...,object-7  
-predicates: predicate-0,...,predicate-3  
+predicates: predicate-0,predicate-2
 ```
 triples:
 ```text
 (subject-4, predicate-0, object-4)
 (subject-0, predicate-1, object-7)
-...
+(subject-3, predicate-7, object-5)
 (subject-6, predicate-3, object-7)
 ```
 Triple graph with N = 8 in Native model:  
@@ -207,74 +207,24 @@ Query time (ms), number of queries is 50:
 
 ### Creation and query performance using Java API
 
-Number in columns is the N parameter in the triple graph.
+Number in columns is the number of statements (parameter S in the triple graph).
 
 Create time (ms)
 
-|Model     |  20   |  40   | 60    | 80    |
+|Model     |  100  |  200  | 300   | 400   |
 |----------|-------|-------|-------|-------|
-|Native    |31.00  |46.50  |81.25  |162.75 |
-|Predicate |40.00  |73.00  |122.25 |233.25 |
-|Evaluation|62.75  |128.75 |330.25 |856.75 |
+|Native    |12     |20     |37     |49     |
+|Predicate |15     |32     |50     |60     |
+|Evaluation|25     |53     |93     |128    |
 
-![Neo4j create requests](docs/images/time_create_neo4j_api.png)
+![Neo4j create requests](docs/images/perf/time_create_neo4j_api.png)
 
 Query time (ms), number of queries is 50:
 
-|Model     |  20  |  40  | 60   | 80  |
-|----------|------|------|------|-----|
-|Native    |5.00  |4.50  |5.00  |6.75 |
-|Predicate |6.75  |6.75  |8.00  |8.00 |
-|Evaluation|11.25 |13.00 |11.75 |11.75|
+|Model     |1000  |2000  |3000 |4000 |
+|----------|------|------|-----|-----|
+|Native    |57    |130   |187  |256  |
+|Predicate |64    |142   |213  |269  |
+|Evaluation|69    |151   |219  |287  |
 
-![Neo4j query requests](docs/images/time_query_neo4j_api.png)
-
-## Storages
-
-### Neo4j
-
-* [Java API](https://neo4j.com/docs/api/java-driver/current)
-
-Run docker:
-```bash
-docker run \
-    --publish=7474:7474 --publish=7687:7687 \
-    --volume=$HOME/neo4j/data:/data \
-    --rm -d neo4j
-```
-
-Open Neo4j in browser: [http://localhost:7474/browser](http://localhost:7474/browser)
-
-Commands:
-```cypher
-// get all nodes
-MATCH (n) RETURN n;
-
-// delete all nodes
-MATCH (n) DELETE n;
-
-// count nodes
-MATCH (n) RETURN count(n);
-```
-
-Store triples (subject, predicate, object):
-```cypher
-MERGE (:Person {name: {subject}})
-MERGE (:Item   {name: {object}})
-MATCH (a:Person {name: {subject}}), (b:Item {name: {object}})
-    CREATE (a)-[r:PREDICATE {name: {predicate}}] ->(b)
-```
-
-Query triples (subject, predicate, object):
-```cypher
-MATCH (:Person {name: {subject}})-[:PREDICATE {name: {predicate}}]->(s:Item) RETURN s.name
-MATCH (o:Person)-[p:PREDICATE]->(s:Item) WHERE o.name = 'subject-0' and p.name = 'predicate-0'  RETURN s
-
-```
-
-## Data
-
-### Ontology
-* [Animal Natural History and Life History Ontology](http://aber-owl.net/ontology/ADW/)
-* [Ontology Java parser OWLAPI](https://github.com/owlcs/owlapi/)
-* [Introduction OWLAPI](http://syllabus.cs.manchester.ac.uk/pgt/2017/COMP62342/introduction-owl-api-msc.pdf)
+![Neo4j query requests](docs/images/perf/time_query_neo4j_api.png)

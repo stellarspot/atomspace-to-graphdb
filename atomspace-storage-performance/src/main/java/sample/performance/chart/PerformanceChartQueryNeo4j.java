@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 public class PerformanceChartQueryNeo4j extends Application {
 
 
-    static final double xMin = 20;
-    static final double xMax = 80;
+//    static final double xMin = 20;
+//    static final double xMax = 80;
 
     // ============================
     // Atomspace
@@ -84,70 +84,82 @@ public class PerformanceChartQueryNeo4j extends Application {
 
     // ============================
     // Neo4j Java API
-//    // create
-//    static final String TITLE = "Create requests";
-//    static final double[][] DATA_NATIVE = {
-//            {20, 31.00},
-//            {40, 46.50},
-//            {60, 81.25},
-//            {80, 162.75},
-//    };
-//
-//    static final double[][] DATA_PREDICATE = {
-//            {20, 40.00},
-//            {40, 73.00},
-//            {60, 122.25},
-//            {80, 233.25},
-//    };
-//
-//    static final double[][] DATA_EVALUATION = {
-//            {20, 62.75},
-//            {40, 128.75},
-//            {60, 330.25},
-//            {80, 856.75},
-//    };
-//
-//    static final double yMin = 30;
-//    static final double yMax = 860;
-
-    // query
-    static final String TITLE = "Query requests";
+    // create
+    static final String TITLE = "Create requests";
+    static final String LABEL = "Number of triples";
     static final double[][] DATA_NATIVE = {
-            {20, 5.00},
-            {40, 4.50},
-            {60, 5.00},
-            {80, 6.75},
+            {100, 12},
+            {200, 20},
+            {300, 37},
+            {400, 49},
     };
 
     static final double[][] DATA_PREDICATE = {
-            {20, 6.75},
-            {40, 6.75},
-            {60, 8.00},
-            {80, 8.00},
+            {100, 15},
+            {200, 32},
+            {300, 50},
+            {400, 60},
     };
 
     static final double[][] DATA_EVALUATION = {
-            {20, 11.25},
-            {40, 13.00},
-            {60, 11.75},
-            {80, 11.75},
+            {100, 25},
+            {200, 53},
+            {300, 93},
+            {400, 128},
     };
 
-    static final double yMin = 4;
-    static final double yMax = 14;
+    static final double xMin = 100;
+    static final double xMax = 400;
+    static final double xTickUnit = 50;
+
+    static final double yMin = 10;
+    static final double yMax = 130;
+    static final double yTickUnit = 20;
+
+
+//    // query
+//    static final String TITLE = "Query requests";
+//    static final String LABEL = "Number of queries";
+//    static final double[][] DATA_NATIVE = {
+//            {1000, 57},
+//            {2000, 130},
+//            {3000, 187},
+//            {4000, 256},
+//    };
+//
+//    static final double[][] DATA_PREDICATE = {
+//            {1000, 64},
+//            {2000, 142},
+//            {3000, 213},
+//            {4000, 269},
+//    };
+//
+//    static final double[][] DATA_EVALUATION = {
+//            {1000, 69},
+//            {2000, 151},
+//            {3000, 219},
+//            {4000, 287},
+//    };
+//
+//    static final double xMin = 1000;
+//    static final double xMax = 4000;
+//    static final double xTickUnit = 500;
+//
+//    static final double yMin = 55;
+//    static final double yMax = 300;
+//    static final double yTickUnit = 50;
 
     @Override
     public void start(Stage stage) throws Exception {
 
         stage.setTitle(TITLE);
 
-
-        final NumberAxis xAxis = new NumberAxis(xMin, xMax, 20);
-        final NumberAxis yAxis = new NumberAxis(yMin, yMax, 100);
+        final NumberAxis xAxis = new NumberAxis(xMin, xMax, xTickUnit);
+        final NumberAxis yAxis = new NumberAxis(yMin, yMax, yTickUnit);
 
         final LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         yAxis.setLabel("Time(ms)");
-        xAxis.setLabel("Number of subjects in triple graph");
+        xAxis.setLabel(LABEL);
 
         lineChart.setTitle("Chart");
 

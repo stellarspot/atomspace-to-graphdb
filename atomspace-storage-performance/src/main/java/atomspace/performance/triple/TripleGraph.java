@@ -28,8 +28,8 @@ public abstract class TripleGraph {
     }
 
     public String getStatistics() {
-        return String.format("subjects: %d, predicates: %d, objects: %d\n",
-                subjects.size(), predicates.size(), objects.size());
+        return String.format("subjects: %d, predicates: %d, objects: %d, triples: %d%n",
+                subjects.size(), predicates.size(), objects.size(), triples.size());
     }
 
     protected final void addTriple(Triple triple) {
