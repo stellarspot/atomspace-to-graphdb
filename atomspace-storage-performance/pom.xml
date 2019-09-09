@@ -7,6 +7,11 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
+    <properties>
+        <janusgraph.version>0.4.0</janusgraph.version>
+        <tinkerpop.version>3.3.3</tinkerpop.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -51,6 +56,29 @@
             <artifactId>neo4j-bolt</artifactId>
             <version>3.5.8</version>
         </dependency>
+
+        <!-- Janus Graph -->
+        <dependency>
+            <groupId>org.janusgraph</groupId>
+            <artifactId>janusgraph-core</artifactId>
+            <version>${janusgraph.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tinkerpop</groupId>
+            <artifactId>gremlin-server</artifactId>
+            <version>${tinkerpop.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.janusgraph</groupId>
+            <artifactId>janusgraph-berkeleyje</artifactId>
+            <version>${janusgraph.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.janusgraph</groupId>
+            <artifactId>janusgraph-lucene</artifactId>
+            <version>${janusgraph.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
