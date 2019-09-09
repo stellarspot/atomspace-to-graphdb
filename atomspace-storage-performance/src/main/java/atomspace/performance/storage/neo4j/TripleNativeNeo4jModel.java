@@ -31,15 +31,15 @@ public class TripleNativeNeo4jModel extends TripleNeo4jModel {
         try (Session session = storage.driver.session()) {
             try (Transaction tx = session.beginTransaction()) {
                 for (Triple triple : tripleGraph.getTriples()) {
-                    tx.run("MERGE (:Person {name: {subject}})  ",
+                    tx.run("MERGE (:Subject {value: {subject}})  ",
                             parameters("subject", triple.subject));
-                    tx.run("MERGE (:Item {name: {object}})  ",
+                    tx.run("MERGE (:Object {value: {object}})  ",
                             parameters("object", triple.object));
                 }
                 for (Triple triple : tripleGraph.getTriples()) {
-                    tx.run("MATCH (a:Person {name: {subject}})," +
-                                    " (b:Item {name: {object}}) " +
-                                    " CREATE (a)-[r:PREDICATE {name: {predicate}}] ->(b)",
+                    tx.run("MATCH (a:Subject {value: {subject}})," +
+                                    " (b:Object {value: {object}}) " +
+                                    " CREATE (a)-[r:PREDICATE {value: {predicate}}] ->(b)",
                             parameters("subject", triple.subject,
                                     "object", triple.object,
                                     "predicate", triple.predicate));
@@ -65,9 +65,9 @@ public class TripleNativeNeo4jModel extends TripleNeo4jModel {
                 for (int i = 0; i < iterations; i++) {
 
                     Triple triple = triples.get(rand.nextInt(size));
-                    StatementResult res = tx.run("MATCH (o:Person)-[p:PREDICATE ]->(s:Item) " +
-                                    " WHERE o.name = {subject} and p.name = {predicate}" +
-                                    " RETURN s.name",
+                    StatementResult res = tx.run("MATCH (o:Subject)-[p:PREDICATE ]->(s:Object) " +
+                                    " WHERE o.value = {subject} and p.value = {predicate}" +
+                                    " RETURN s.value",
                             parameters("subject", triple.subject,
                                     "predicate", triple.predicate));
 

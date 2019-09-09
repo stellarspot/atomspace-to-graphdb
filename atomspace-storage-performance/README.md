@@ -188,27 +188,43 @@ RETURN o.value
 
 ### Creation and query performance using Cypher
 
-Number in columns is the N parameter in the triple graph.
+The following indices are used in Neo4j:
+```cypher
+CREATE INDEX ON :Atom(id)
+CREATE INDEX ON :Atom(type)
+CREATE INDEX ON :ARG(position)
+CREATE INDEX ON :Subject(value)
+CREATE INDEX ON :Object(value)
+```
+
+Number in columns is the number of triples (parameter S in the triple graph).
+Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
 
 Create time (ms)
 
-|Model     |  20   |  40   | 60    | 80     |
-|----------|-------|-------|-------|--------|
-|Native    |69.25  |106.00 |216.25 |399.75  |
-|Predicate |82.00  |549.00 |2291.25|6539.75 |
-|Evaluation|159.75 |1614.50|7217.75|22171.00|
+|Model     |  100  |  200  | 300   | 400   |
+|----------|-------|-------|-------|-------|
+|Native    |18     |31     |37     |42     |
+|Predicate |24     |48     |66     |84     |
+|Evaluation|42     |76     |112    |138    |
 
-![Neo4j create requests](docs/images/time_create.png)
+![Neo4j create requests](docs/images/perf/time_create_neo4j_cypher.png)
 
-Query time (ms), number of queries is 50:
 
-|Model     |  20  |  40  | 60   | 80   |
-|----------|------|------|------|------|
-|Native    |20.25 |18.25 |17.25 |21.50 |
-|Predicate |37.50 |62.75 |91.50 |154.00|
-|Evaluation|69.75 |239.50|462.75|808.25|
+Number in columns is the number of queries.
+Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
+Parameter S is 500 (number of triples).
 
-![Neo4j query requests](docs/images/time_query.png)
+Query time (ms):
+
+|Model     |100   |200   |300  |400 |
+|----------|------|------|-----|----|
+|Native    |19    |35    |52   |73  |
+|Predicate |25    |46    |65   |95  |
+|Evaluation|645   |1286  |1937 |2543|
+
+
+![Neo4j query requests](docs/images/perf/time_query_neo4j_cypher.png)
 
 ### Creation and query performance using Java API
 

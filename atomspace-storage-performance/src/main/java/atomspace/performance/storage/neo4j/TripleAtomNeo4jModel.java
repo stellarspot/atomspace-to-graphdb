@@ -7,6 +7,7 @@ import atomspace.performance.DBNode;
 import atomspace.performance.triple.Triple;
 import atomspace.performance.triple.TripleGraph;
 import org.neo4j.driver.v1.Session;
+import org.neo4j.driver.v1.StatementResult;
 import org.neo4j.driver.v1.Transaction;
 
 import java.util.List;
@@ -38,17 +39,6 @@ public abstract class TripleAtomNeo4jModel extends TripleNeo4jModel {
             }
         }
 
-    }
-
-    protected void putAtoms(List<DBAtom> atoms) {
-        try (Session session = storage.driver.session()) {
-            try (Transaction tx = session.beginTransaction()) {
-                for (DBAtom atom : atoms) {
-                    putAtom(tx, atom);
-                }
-                tx.success();
-            }
-        }
     }
 
     protected void putAtom(Transaction tx, DBAtom atom) {

@@ -38,7 +38,7 @@ public class SampleNeo4j {
             storage.clearDB();
             model.storeTriples();
 
-            List<String> objects = model.queryObject();
+            List<String> objects = model.queryObjects(4);
             for (String obj : objects) {
                 System.out.printf("Object: %s%n", obj);
             }
