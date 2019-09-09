@@ -13,7 +13,7 @@ public class PerformanceSampleNeo4j {
 
         try (DBNeo4jStorage storage = new DBNeo4jStorage()) {
 
-            int N = 20;
+            int N = 2;
             int iterations = 4;
 
             TripleGraph tripleGraph = TestTripleGraphs.getTripleGraph3();

@@ -45,7 +45,7 @@ triples:
 (subject-3, predicate-1, object-5)
 (subject-6, predicate-0, object-7)
 ```
-Triple graph with N = 8 in Native model:  
+Triple graph with N = 8 and S = 12 in Native model:
 ![Triple graph](docs/images/triple_graph.png)
 
 

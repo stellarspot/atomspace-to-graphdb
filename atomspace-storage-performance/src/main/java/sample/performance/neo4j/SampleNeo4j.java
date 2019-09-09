@@ -6,6 +6,7 @@ import atomspace.performance.triple.RandomTripleGraph;
 import atomspace.performance.triple.Triple;
 import atomspace.performance.triple.TripleGraph;
 import org.apache.commons.lang3.time.StopWatch;
+import sample.performance.TestTripleGraphs;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -25,8 +26,7 @@ public class SampleNeo4j {
 //            );
 
 
-            int N = 8;
-            RandomTripleGraph tripleGraph = new RandomTripleGraph(N, N / 2, N, N / 4);
+            TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(8, 12);
 
 
             TripleNeo4jModel model = new TripleNativeNeo4jModel(storage, tripleGraph);
