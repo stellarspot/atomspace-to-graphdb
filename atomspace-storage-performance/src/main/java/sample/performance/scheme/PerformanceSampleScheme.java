@@ -1,6 +1,8 @@
 package sample.performance.scheme;
 
+import atomspace.performance.storage.TripleAtomModel;
 import atomspace.performance.storage.TripleModel;
+import atomspace.performance.storage.scheme.TripleAtomEvaluationSchemeModel;
 import atomspace.performance.storage.scheme.TripleAtomPredicateSchemeModel;
 import atomspace.performance.triple.TripleGraph;
 import sample.performance.TestTripleGraphs;
@@ -8,11 +10,12 @@ import sample.performance.TestTripleGraphs;
 public class PerformanceSampleScheme {
     public static void main(String[] args) throws Exception {
 
-        int N = 100;
-        int statements = 20;
-        int queries = 20;
+        int N = 500;
+        int statements = 500;
+        int queries = 1000;
 
         TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N, statements);
+        System.out.printf(tripleGraph.getStatistics());
 
 //        for (String predicate : tripleGraph.getPredicates()) {
 //            String link = TripleAtomModel.toLinkLabel(predicate);

@@ -25,7 +25,6 @@ public class TripleAtomEvaluationSchemeModel extends TripleAtomSchemeModel {
 
     @Override
     public void storeTriples() {
-        System.out.printf("Store Scheme triples%n");
 
         AtomsSaver saver = new AtomsSaver();
 
@@ -33,8 +32,6 @@ public class TripleAtomEvaluationSchemeModel extends TripleAtomSchemeModel {
             TripleAtomModel.handleAtom(atom, saver);
             saver.nextLine();
         }
-
-        System.out.println(saver.builder);
 
         saveToFile("create", saver.builder);
     }

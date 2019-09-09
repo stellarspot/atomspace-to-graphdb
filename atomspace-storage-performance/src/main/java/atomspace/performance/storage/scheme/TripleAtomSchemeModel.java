@@ -20,7 +20,6 @@ public abstract class TripleAtomSchemeModel extends TripleSchemeModel implements
         super(file, tripleGraph);
         for (Triple triple : tripleGraph.getTriples()) {
             DBAtom atom = toAtom(triple);
-            System.out.printf("atom: %s%n", atom);
             atoms.add(atom);
         }
     }

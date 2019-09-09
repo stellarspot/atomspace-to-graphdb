@@ -33,8 +33,6 @@ public class TripleAtomPredicateSchemeModel extends TripleAtomSchemeModel {
             saver.nextLine();
         }
 
-        System.out.println(saver.builder);
-
         saveToFile("create", saver.builder);
     }
 

@@ -23,13 +23,13 @@ Evaluation
         Object  "object"
 ```
 
-Triple graph with number of nodes N and number of statements S consists of a list of triples (subject, predicate, object)
+Triple graph with number of nodes N and number of triples S consists of a list of triples (subject, predicate, object)
 where number of
 ```text
 subjects: N  
 objects: N  
 predicates: N / 4
-predicates per subject: S
+number of triples: S
 ```
 
 Example of a triple graph with N = 8 and S = 4:
@@ -42,8 +42,8 @@ triples:
 ```text
 (subject-4, predicate-0, object-4)
 (subject-0, predicate-1, object-7)
-(subject-3, predicate-7, object-5)
-(subject-6, predicate-3, object-7)
+(subject-3, predicate-1, object-5)
+(subject-6, predicate-0, object-7)
 ```
 Triple graph with N = 8 in Native model:  
 ![Triple graph](docs/images/triple_graph.png)
@@ -87,25 +87,30 @@ query to object:
 ```
 ### Creation and query performance
 
-Number in columns is the N parameter in the triple graph.
+Number in columns is the number of triples (parameter S in the triple graph).
+Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
 
 Create time (ms)
 
-|Model     |  20   |  40   | 60    | 80     |
-|----------|-------|-------|-------|--------|
-|Predicate |3.40   |12.46  |29.70  |49.72   |
-|Evaluation|4.73   |18.65  |41.79  |82.18   |
+|Model     |  100  |  200  | 300   | 400   |
+|----------|-------|-------|-------|-------|
+|Predicate |3.34   |7.87   |10.57  |14.36  |
+|Evaluation|5.61   |10.19  |15.44  |18.73  |
 
-![Atomspace time create](docs/images/atomspace_time_create.png)
+![Atomspace time create](docs/images/perf/time_create_atomspace.png)
 
-Query time (ms), number of queries is 50:
+Number in columns is the number of queries.
+Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
+Parameter S is 500 (number of triples).
 
-|Model     |  20   |  40   | 60    | 80     |
-|----------|-------|-------|-------|--------|
-|Predicate |3.58   |3.72   |4.21   |4.42    |
-|Evaluation|4.62   |5.58   |5.93   |7.97    |
+Query time (ms):
 
-![Atomspace time query](docs/images/atomspace_time_query.png)
+|Model     |1000  |2000  |3000 |4000 |
+|----------|------|------|-----|-----|
+|Predicate |74    |162   |240  |325  |
+|Evaluation|105   |200   |331  |399  |
+
+![Atomspace time query](docs/images/perf/time_query_atomspace.png)
 
 ## Neo4j
 
@@ -207,7 +212,8 @@ Query time (ms), number of queries is 50:
 
 ### Creation and query performance using Java API
 
-Number in columns is the number of statements (parameter S in the triple graph).
+Number in columns is the number of triples (parameter S in the triple graph).
+Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
 
 Create time (ms)
 
@@ -219,7 +225,11 @@ Create time (ms)
 
 ![Neo4j create requests](docs/images/perf/time_create_neo4j_api.png)
 
-Query time (ms), number of queries is 50:
+Number in columns is the number of queries.
+Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
+Parameter S is 500 (number of triples).
+
+Query time (ms):
 
 |Model     |1000  |2000  |3000 |4000 |
 |----------|------|------|-----|-----|

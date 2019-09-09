@@ -11,48 +11,61 @@ import javafx.stage.Stage;
 public class PerformanceChartQueryNeo4j extends Application {
 
 
-//    static final double xMin = 20;
-//    static final double xMax = 80;
-
     // ============================
     // Atomspace
     // create
+//    static final String TITLE = "Create requests";
+//    static final String LABEL = "Number of triples";
+//
+//    static final double[][] DATA_PREDICATE = {
+//            {100, 3.34},
+//            {200, 7.87},
+//            {300, 10.57},
+//            {400, 14.36},
+//    };
+//
+//    static final double[][] DATA_EVALUATION = {
+//            {100, 5.61},
+//            {200, 10.19},
+//            {300, 15.44},
+//            {400, 18.73},
+//    };
+//
+//    static final double xMin = 100;
+//    static final double xMax = 400;
+//    static final double xTickUnit = 50;
+//
+//    static final double yMin = 3;
+//    static final double yMax = 20;
+//    static final double yTickUnit = 5;
 
-//    // create
-//    static final double[][] DATA_PREDICATE = {
-//            {20, 3.43},
-//            {40, 12.46},
-//            {60, 29.70},
-//            {80, 49.72},
-//    };
-//
-//    static final double[][] DATA_EVALUATION = {
-//            {20, 4.73},
-//            {40, 18.65},
-//            {60, 41.79},
-//            {80, 82.18},
-//    };
-//
-//    static final double yMin = 3;
-//    static final double yMax = 85;
-//
-//    // query
-//    static final double[][] DATA_PREDICATE = {
-//            {20, 3.58},
-//            {40, 3.72},
-//            {60, 4.21},
-//            {80, 4.42},
-//    };
-//
-//    static final double[][] DATA_EVALUATION = {
-//            {20, 4.62},
-//            {40, 5.58},
-//            {60, 5.93},
-//            {80, 7.97},
-//    };
-//
-//    static final double yMin = 3;
-//    static final double yMax = 8;
+    // query
+    static final String TITLE = "Query requests";
+    static final String LABEL = "Number of queries";
+
+    static final double[][] DATA_PREDICATE = {
+            {1000, 74},
+            {2000, 162},
+            {3000, 240},
+            {4000, 325},
+    };
+
+    static final double[][] DATA_EVALUATION = {
+            {1000, 105},
+            {2000, 200},
+            {3000, 331},
+            {4000, 399},
+    };
+
+    static final double xMin = 1000;
+    static final double xMax = 4000;
+    static final double xTickUnit = 500;
+
+    static final double yMin = 70;
+    static final double yMax = 400;
+    static final double yTickUnit = 50;
+
+    // ============================
 
 //    // Neo4j
 //    static final double[][] DATA_NATIVE = {
@@ -85,36 +98,36 @@ public class PerformanceChartQueryNeo4j extends Application {
     // ============================
     // Neo4j Java API
     // create
-    static final String TITLE = "Create requests";
-    static final String LABEL = "Number of triples";
-    static final double[][] DATA_NATIVE = {
-            {100, 12},
-            {200, 20},
-            {300, 37},
-            {400, 49},
-    };
-
-    static final double[][] DATA_PREDICATE = {
-            {100, 15},
-            {200, 32},
-            {300, 50},
-            {400, 60},
-    };
-
-    static final double[][] DATA_EVALUATION = {
-            {100, 25},
-            {200, 53},
-            {300, 93},
-            {400, 128},
-    };
-
-    static final double xMin = 100;
-    static final double xMax = 400;
-    static final double xTickUnit = 50;
-
-    static final double yMin = 10;
-    static final double yMax = 130;
-    static final double yTickUnit = 20;
+//    static final String TITLE = "Create requests";
+//    static final String LABEL = "Number of triples";
+//    static final double[][] DATA_NATIVE = {
+//            {100, 12},
+//            {200, 20},
+//            {300, 37},
+//            {400, 49},
+//    };
+//
+//    static final double[][] DATA_PREDICATE = {
+//            {100, 15},
+//            {200, 32},
+//            {300, 50},
+//            {400, 60},
+//    };
+//
+//    static final double[][] DATA_EVALUATION = {
+//            {100, 25},
+//            {200, 53},
+//            {300, 93},
+//            {400, 128},
+//    };
+//
+//    static final double xMin = 100;
+//    static final double xMax = 400;
+//    static final double xTickUnit = 50;
+//
+//    static final double yMin = 10;
+//    static final double yMax = 130;
+//    static final double yTickUnit = 20;
 
 
 //    // query
@@ -164,7 +177,7 @@ public class PerformanceChartQueryNeo4j extends Application {
         lineChart.setTitle("Chart");
 
 
-        lineChart.getData().addAll(getSeries("Native", DATA_NATIVE));
+//        lineChart.getData().addAll(getSeries("Native", DATA_NATIVE));
         lineChart.getData().addAll(getSeries("Predicate", DATA_PREDICATE));
         lineChart.getData().addAll(getSeries("Evaluation", DATA_EVALUATION));
 
