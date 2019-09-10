@@ -18,9 +18,6 @@ public class JanusGraphExample {
 
         addPredicate(graph, "s1", "p1", "o1");
 
-//        System.out.printf("Vertices count: %s%n", g.V().count().next());
-//        System.out.printf("labels: %s%n", g.V().label().next());
-
         print(graph);
         clearDB(graph);
         print(graph);

@@ -2,11 +2,10 @@ package atomspace.performance.storage.janusgraph;
 
 import atomspace.performance.triple.Triple;
 import atomspace.performance.triple.TripleGraph;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Transaction;
-import org.janusgraph.core.JanusGraphEdge;
-import org.janusgraph.core.JanusGraphTransaction;
-import org.janusgraph.core.JanusGraphVertex;
-import org.neo4j.graphdb.Label;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,20 +33,19 @@ public class TripleNativeJanusGraphModel extends TripleJanusGraphModel {
     @Override
     public void storeTriples() {
 
-        JanusGraphTransaction tx = storage.graph.newTransaction();
+        GraphTraversalSource g = storage.graph.traversal();
 
-        for (Triple triple : tripleGraph.getTriples()) {
+        try (Transaction tx = g.tx()) {
 
-            JanusGraphVertex sbj = tx.addVertex(SUBJECT_LABEL);
-            sbj.property("value", triple.subject);
 
-            JanusGraphVertex obj = tx.addVertex(OBJECT_LABEL);
-            obj.property("value", triple.object);
+            for (Triple triple : tripleGraph.getTriples()) {
 
-            JanusGraphEdge edge = obj.addEdge(triple.predicate.toUpperCase(), sbj);
+                Vertex sbj = storage.getOrCreate(g, SUBJECT_LABEL, "value", triple.subject);
+                Vertex obj = storage.getOrCreate(g, OBJECT_LABEL, "value", triple.object);
+                sbj.addEdge(triple.predicate, obj);
+            }
+            tx.commit();
         }
-
-        tx.commit();
     }
 
     @Override
@@ -61,22 +59,20 @@ public class TripleNativeJanusGraphModel extends TripleJanusGraphModel {
         int size = triples.size();
         Random rand = new Random(42);
 
-//        GraphDatabaseService graph = storage.graph;
-//        try (Transaction tx = graph.beginTx()) {
-//            for (int i = 0; i < iterations; i++) {
-//                Triple triple = triples.get(rand.nextInt(size));
-//
-//                Node node = graph.findNode(SUBJECT_LABEL, "value", triple.subject);
-//
-//                RelationshipType linkType = RelationshipType.withName(triple.predicate);
-//                for (Relationship r : node.getRelationships(linkType, Direction.OUTGOING)) {
-//                    String object = r.getEndNode().getProperty("value").toString();
-//                    objects.add(object);
-//                }
-//            }
-//
-//            tx.success();
-//        }
+        GraphTraversalSource g = storage.graph.traversal();
+
+        for (int i = 0; i < iterations; i++) {
+            Triple triple = triples.get(rand.nextInt(size));
+
+            GraphTraversal<Vertex, Vertex> iter = g.V()
+                    .hasLabel(SUBJECT_LABEL)
+                    .has("value", triple.subject)
+                    .out(triple.predicate).V().hasLabel(OBJECT_LABEL);
+
+            if (iter.hasNext()) {
+                objects.add(iter.next().value("value"));
+            }
+        }
 
         return objects;
     }

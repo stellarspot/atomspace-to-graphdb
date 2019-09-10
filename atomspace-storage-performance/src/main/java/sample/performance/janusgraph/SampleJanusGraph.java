@@ -17,15 +17,17 @@ public class SampleJanusGraph {
         try (DBJanusGraphStorage storage = new DBJanusGraphStorage()) {
 
 
-            TripleGraph tripleGraph = new FixedTripleGraph(
-                    new Triple("Alice", "likes", "ice-cream"));
-
 //            TripleGraph tripleGraph = new FixedTripleGraph(
-//                    new Triple("Alice", "likes", "ice-cream"),
+//                    new Triple("Alice", "likes", "ice-cream"));
+
+            TripleGraph tripleGraph = new FixedTripleGraph(
+                    new Triple("Alice", "likes", "ice-cream"),
 //                    new Triple("Alice", "likes", "apple"),
 //                    new Triple("Alice", "dislikes", "pear"),
 //                    new Triple("Bob", "likes", "apple")
-//            );
+                    new Triple("Alice", "dislikes", "pear")
+
+            );
 
 
 //            int N = 8;
