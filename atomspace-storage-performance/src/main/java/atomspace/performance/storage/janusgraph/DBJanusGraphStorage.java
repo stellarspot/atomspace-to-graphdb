@@ -5,13 +5,12 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.apache.tinkerpop.gremlin.structure.VertexProperty;
 import org.janusgraph.core.JanusGraph;
 import org.janusgraph.core.JanusGraphFactory;
-import org.neo4j.graphdb.*;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 public class DBJanusGraphStorage implements DBStorage {
 
@@ -38,8 +37,13 @@ public class DBJanusGraphStorage implements DBStorage {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         graph.close();
+    }
+
+    Vertex getOrCreate(GraphTraversalSource g, String label, String key, String value) {
+        GraphTraversal<Vertex, Vertex> t = g.V().hasLabel(label).has(key, value);
+        return t.hasNext() ? t.next() : g.addV(label).property(key, value).next();
     }
 
     public void dump() {
@@ -50,22 +54,34 @@ public class DBJanusGraphStorage implements DBStorage {
         while (edges.hasNext()) {
             Edge edge = edges.next();
 
-            String startLabel = edge.inVertex().label();
-            String startValue = edge.inVertex().value("value");
-
-            String endLabel = edge.outVertex().label();
-            String endValue = edge.outVertex().value("value");
-
+            String startVertex = toString(edge.inVertex());
+            String endVertex = toString(edge.outVertex());
             String edgeLabel = edge.label();
-            System.out.printf("(:%s {value: '%s'}) - [%s] -> (:%s {value: '%s'})%n",
-                    startLabel, startValue, edgeLabel, endLabel, endValue);
+
+            System.out.printf("%s - [%s] -> %s%n", startVertex, edgeLabel, endVertex);
         }
         System.out.printf("--- ---- ---%n");
     }
 
-    Vertex getOrCreate(GraphTraversalSource g, String label, String key, String value) {
+    private static String toString(Vertex v) {
 
-        GraphTraversal<Vertex, Vertex> t = g.V().hasLabel(label).has(key, value);
-        return t.hasNext() ? t.next() : g.addV(label).property(key, value).next();
+        StringBuilder builder = new StringBuilder();
+
+        String label = v.label();
+        builder.append("(:").append(label);
+
+        Iterator<VertexProperty<Object>> props = v.properties();
+
+        builder.append(" {");
+
+        while (props.hasNext()) {
+            VertexProperty<Object> prop = props.next();
+            String key = prop.key();
+            Object value = v.value(key);
+            builder.append(key).append(": '").append(value).append("'");
+        }
+
+        builder.append("})");
+        return builder.toString();
     }
 }

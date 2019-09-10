@@ -50,7 +50,7 @@ public abstract class TripleAtomNeo4jAPIModel extends TripleNeo4jAPIModel {
             return putLink((DBLink) atom);
         }
 
-        throw new RuntimeException("Unknown aom type!");
+        throw new RuntimeException("Unknown atom type!");
     }
 
     protected LookupNode putNode(DBNode node) {

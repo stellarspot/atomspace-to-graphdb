@@ -1,6 +1,7 @@
 package sample.performance.janusgraph;
 
 import atomspace.performance.storage.janusgraph.DBJanusGraphStorage;
+import atomspace.performance.storage.janusgraph.TripleAtomPredicateJanusGraphModel;
 import atomspace.performance.storage.janusgraph.TripleNativeJanusGraphModel;
 import atomspace.performance.storage.neo4japi.DBNeo4jAPIStorage;
 import atomspace.performance.storage.neo4japi.TripleNativeNeo4jAPIModel;
@@ -34,8 +35,8 @@ public class SampleJanusGraph {
 //            int statements = 4;
 //            TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N, statements);
 
-            TripleNativeJanusGraphModel model = new TripleNativeJanusGraphModel(storage, tripleGraph);
-//            TripleNeo4jAPIModel model = new TripleAtomPredicateNeo4jAPIModel(storage, tripleGraph);
+//            TripleNativeJanusGraphModel model = new TripleNativeJanusGraphModel(storage, tripleGraph);
+            TripleAtomPredicateJanusGraphModel model = new TripleAtomPredicateJanusGraphModel(storage, tripleGraph);
 //            TripleNeo4jAPIModel model = new TripleAtomEvaluationNeo4jAPIModel(storage, tripleGraph);
 
 
