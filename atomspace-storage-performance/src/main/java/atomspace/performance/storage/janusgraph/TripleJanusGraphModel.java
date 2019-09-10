@@ -8,6 +8,9 @@ import org.neo4j.graphdb.Label;
 
 public abstract class TripleJanusGraphModel implements TripleModel {
 
+    static final String SUBJECT_LABEL = "SubjectNode";
+    static final String OBJECT_LABEL = "ObjectNode";
+
     protected final DBJanusGraphStorage storage;
     protected final TripleGraph tripleGraph;
 

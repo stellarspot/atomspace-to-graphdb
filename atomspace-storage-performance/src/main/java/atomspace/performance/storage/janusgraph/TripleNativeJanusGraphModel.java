@@ -14,9 +14,6 @@ import java.util.Random;
 
 public class TripleNativeJanusGraphModel extends TripleJanusGraphModel {
 
-    private static final String SUBJECT_LABEL = "SubjectNode";
-    private static final String OBJECT_LABEL = "ObjectNode";
-
     public TripleNativeJanusGraphModel(TripleGraph tripleGraph) {
         super(tripleGraph);
     }
@@ -36,7 +33,6 @@ public class TripleNativeJanusGraphModel extends TripleJanusGraphModel {
         GraphTraversalSource g = storage.graph.traversal();
 
         try (Transaction tx = g.tx()) {
-
 
             for (Triple triple : tripleGraph.getTriples()) {
 
