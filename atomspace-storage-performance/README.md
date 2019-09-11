@@ -241,6 +241,24 @@ Create time (ms)
 
 ![Neo4j create requests](docs/images/perf/time_create_neo4j_api.png)
 
+## JanusGraph
+
+### Creation and query performance using Java API
+
+Number in columns is the number of triples (parameter S in the triple graph).
+Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
+
+Create time (ms)
+
+|Model     |  100  |  200  | 300   | 400   |
+|----------|-------|-------|-------|-------|
+|Native    |139    |392    |715    |1076   |
+|Predicate |160    |467    |824    |1242   |
+|Evaluation|235    |665    |1187   |1782   |
+
+![JanusGraph create requests](docs/images/perf/time_create_janusgraph.png)
+
+
 Number in columns is the number of queries.
 Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
 Parameter S is 500 (number of triples).
@@ -249,12 +267,11 @@ Query time (ms):
 
 |Model     |1000  |2000  |3000 |4000 |
 |----------|------|------|-----|-----|
-|Native    |57    |130   |187  |256  |
-|Predicate |64    |142   |213  |269  |
-|Evaluation|69    |151   |219  |287  |
+|Native    |45    |73    |105  |133  |
+|Predicate |69    |111   |156  |195  |
+|Evaluation|199   |365   |513  |635  |
 
-![Neo4j query requests](docs/images/perf/time_query_neo4j_api.png)
-
+![JanusGraph query requests](docs/images/perf/time_query_janusgraph.png)
 
 ## Conclusion
 

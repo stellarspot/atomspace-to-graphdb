@@ -100,37 +100,37 @@ public class PerformanceChartQueryNeo4j extends Application {
 //    static final double yTickUnit = 20;
 
 
-    // query
-    static final String TITLE = "Query requests";
-    static final String LABEL = "Number of queries";
-    static final double[][] DATA_NATIVE = {
-            {100, 19},
-            {200, 35},
-            {300, 52},
-            {400, 73},
-    };
-
-    static final double[][] DATA_PREDICATE = {
-            {100, 25},
-            {200, 46},
-            {300, 65},
-            {400, 95},
-    };
-
-    static final double[][] DATA_EVALUATION = {
-            {100, 645},
-            {200, 1286},
-            {300, 1937},
-            {400, 2543},
-    };
-
-    static final double xMin = 100;
-    static final double xMax = 400;
-    static final double xTickUnit = 50;
-
-    static final double yMin = 19;
-    static final double yMax = 2543;
-    static final double yTickUnit = 300;
+//    // query
+//    static final String TITLE = "Query requests";
+//    static final String LABEL = "Number of queries";
+//    static final double[][] DATA_NATIVE = {
+//            {100, 19},
+//            {200, 35},
+//            {300, 52},
+//            {400, 73},
+//    };
+//
+//    static final double[][] DATA_PREDICATE = {
+//            {100, 25},
+//            {200, 46},
+//            {300, 65},
+//            {400, 95},
+//    };
+//
+//    static final double[][] DATA_EVALUATION = {
+//            {100, 645},
+//            {200, 1286},
+//            {300, 1937},
+//            {400, 2543},
+//    };
+//
+//    static final double xMin = 100;
+//    static final double xMax = 400;
+//    static final double xTickUnit = 50;
+//
+//    static final double yMin = 19;
+//    static final double yMax = 2543;
+//    static final double yTickUnit = 300;
 
     // ============================
     // Neo4j Java API
@@ -198,6 +198,74 @@ public class PerformanceChartQueryNeo4j extends Application {
 //    static final double yMin = 55;
 //    static final double yMax = 300;
 //    static final double yTickUnit = 50;
+
+    // ============================
+    // Janus Graph
+
+//    // create
+//    static final String TITLE = "Create requests";
+//    static final String LABEL = "Number of triples";
+//    static final double[][] DATA_NATIVE = {
+//            {100, 139},
+//            {200, 392},
+//            {300, 715},
+//            {400, 1076},
+//    };
+//
+//    static final double[][] DATA_PREDICATE = {
+//            {100, 160},
+//            {200, 467},
+//            {300, 824},
+//            {400, 1242},
+//    };
+//
+//    static final double[][] DATA_EVALUATION = {
+//            {100, 235},
+//            {200, 665},
+//            {300, 1187},
+//            {400, 1782},
+//    };
+//
+//    static final double xMin = 100;
+//    static final double xMax = 400;
+//    static final double xTickUnit = 50;
+//
+//    static final double yMin = 140;
+//    static final double yMax = 1780;
+//    static final double yTickUnit = 500;
+
+
+    // query
+    static final String TITLE = "Query requests";
+    static final String LABEL = "Number of queries";
+    static final double[][] DATA_NATIVE = {
+            {100, 45},
+            {200, 73},
+            {300, 105},
+            {400, 133},
+    };
+
+    static final double[][] DATA_PREDICATE = {
+            {100, 69},
+            {200, 111},
+            {300, 156},
+            {400, 195},
+    };
+
+    static final double[][] DATA_EVALUATION = {
+            {100, 199},
+            {200, 365},
+            {300, 513},
+            {400, 635},
+    };
+
+    static final double xMin = 100;
+    static final double xMax = 400;
+    static final double xTickUnit = 50;
+
+    static final double yMin = 45;
+    static final double yMax = 640;
+    static final double yTickUnit = 50;
 
     @Override
     public void start(Stage stage) throws Exception {

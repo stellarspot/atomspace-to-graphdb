@@ -79,7 +79,8 @@ public class TripleAtomEvaluationJanusGraphModel extends TripleAtomJanusGraphMod
 
                     // Find ObjectNode vertex
                     GraphTraversal<Vertex, Vertex> objectNodeTraversal = g.V(listLink.id())
-                            .in(getArgType(1));
+                            .in(getArgType(1))
+                            .hasLabel(OBJECT_NODE);
 
                     while (objectNodeTraversal.hasNext()) {
                         String object = objectNodeTraversal.next().value("value").toString();

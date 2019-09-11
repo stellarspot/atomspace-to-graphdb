@@ -15,7 +15,7 @@ public class PerformanceSampleJanusGraph {
         try (DBJanusGraphStorage storage = new DBJanusGraphStorage()) {
 
             int N = 500;
-            int statements = 400;
+            int statements = 300;
             int queries = 2;
 
 //            TripleGraph tripleGraph = TestTripleGraphs.getTripleGraph3();
