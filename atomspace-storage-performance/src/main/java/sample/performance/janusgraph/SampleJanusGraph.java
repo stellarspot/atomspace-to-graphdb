@@ -1,8 +1,6 @@
 package sample.performance.janusgraph;
 
-import atomspace.performance.storage.janusgraph.DBJanusGraphStorage;
-import atomspace.performance.storage.janusgraph.TripleAtomPredicateJanusGraphModel;
-import atomspace.performance.storage.janusgraph.TripleNativeJanusGraphModel;
+import atomspace.performance.storage.janusgraph.*;
 import atomspace.performance.storage.neo4japi.DBNeo4jAPIStorage;
 import atomspace.performance.storage.neo4japi.TripleNativeNeo4jAPIModel;
 import atomspace.performance.storage.neo4japi.TripleNeo4jAPIModel;
@@ -18,26 +16,28 @@ public class SampleJanusGraph {
         try (DBJanusGraphStorage storage = new DBJanusGraphStorage()) {
 
 
-//            TripleGraph tripleGraph = new FixedTripleGraph(
-//                    new Triple("Alice", "likes", "ice-cream"));
+            TripleGraph tripleGraph = new FixedTripleGraph(
+                    new Triple("Alice", "likes", "ice-cream"));
 
+/*
             TripleGraph tripleGraph = new FixedTripleGraph(
                     new Triple("Alice", "likes", "ice-cream"),
-//                    new Triple("Alice", "likes", "apple"),
-//                    new Triple("Alice", "dislikes", "pear"),
-//                    new Triple("Bob", "likes", "apple")
+                    new Triple("Alice", "likes", "apple"),
+                    new Triple("Alice", "dislikes", "pear"),
+                    new Triple("Bob", "likes", "apple")
                     new Triple("Alice", "dislikes", "pear")
 
             );
+*/
 
 
 //            int N = 8;
 //            int statements = 4;
 //            TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N, statements);
 
-//            TripleNativeJanusGraphModel model = new TripleNativeJanusGraphModel(storage, tripleGraph);
-            TripleAtomPredicateJanusGraphModel model = new TripleAtomPredicateJanusGraphModel(storage, tripleGraph);
-//            TripleNeo4jAPIModel model = new TripleAtomEvaluationNeo4jAPIModel(storage, tripleGraph);
+//            TripleJanusGraphModel model = new TripleNativeJanusGraphModel(storage, tripleGraph);
+//            TripleJanusGraphModel model = new TripleAtomPredicateJanusGraphModel(storage, tripleGraph);
+            TripleJanusGraphModel model = new TripleAtomEvaluationJanusGraphModel(storage, tripleGraph);
 
 
             System.out.printf("model: %s", tripleGraph.getStatistics());
