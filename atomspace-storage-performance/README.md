@@ -241,6 +241,21 @@ Create time (ms)
 
 ![Neo4j create requests](docs/images/perf/time_create_neo4j_api.png)
 
+Number in columns is the number of queries.
+Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
+Parameter S is 500 (number of triples).
+
+Query time (ms):
+
+|Model     |1000  |2000  |3000 |4000 |
+|----------|------|------|-----|-----|
+|Native    |57    |130   |187  |256  |
+|Predicate |64    |142   |213  |269  |
+|Evaluation|69    |151   |219  |287  |
+
+![Neo4j query requests](docs/images/perf/time_query_neo4j_api.png)
+
+
 ## JanusGraph
 
 ### Creation and query performance using Java API
