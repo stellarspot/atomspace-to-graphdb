@@ -58,6 +58,8 @@ public abstract class TripleAtomJanusGraphModel extends TripleJanusGraphModel {
                 .hasLabel(node.type)
                 .has("id", node.id);
 
+//        System.out.printf("node type: %s%n", node.type);
+
         if (t.hasNext()) {
             return new LookupNode(true, t.next());
         }
@@ -79,6 +81,7 @@ public abstract class TripleAtomJanusGraphModel extends TripleJanusGraphModel {
                 .hasLabel(link.type)
                 .has("id", link.id);
 
+//        System.out.printf("link type: %s%n", link.type);
 
         if (t.hasNext()) {
             return new LookupNode(true, t.next());

@@ -18,6 +18,9 @@ import java.util.Iterator;
 
 import static atomspace.performance.storage.janusgraph.TripleAtomJanusGraphModel.OBJECT_NODE;
 import static atomspace.performance.storage.janusgraph.TripleAtomJanusGraphModel.SUBJECT_NODE;
+import static atomspace.performance.storage.janusgraph.TripleJanusGraphModel.EVALUATION_LINK;
+import static atomspace.performance.storage.janusgraph.TripleJanusGraphModel.LIST_LINK;
+import static atomspace.performance.storage.janusgraph.TripleJanusGraphModel.PREDICATE_NODE;
 
 public class DBJanusGraphStorage implements DBStorage {
 
@@ -25,6 +28,7 @@ public class DBJanusGraphStorage implements DBStorage {
     static final String BY_OBJECT_INDEX = "byObjectLabel";
     static final String BY_TYPE_INDEX = "byTypeValueProperty";
     static final String BY_TYPE_VALUE_INDEX = "byTypeValueProperty";
+    static final String BY_ID_INDEX = "byIdProperty";
 
     final JanusGraph graph;
 
@@ -39,6 +43,7 @@ public class DBJanusGraphStorage implements DBStorage {
                 .set("storage.directory", String.format("%s/graph", databaseDirectory))
                 .set("index.search.backend", "lucene")
                 .set("index.search.directory", String.format("%s/index", databaseDirectory))
+//                .set("query.force-index", true)
                 .open();
 
 
@@ -81,11 +86,28 @@ public class DBJanusGraphStorage implements DBStorage {
                     .buildCompositeIndex();
         }
 
+        createLabelIndex(mgmt, "byLikesLabelIdProperty", "LIKES_LINK", "id");
+        createLabelIndex(mgmt, "bySubjectLabelIdProperty", SUBJECT_NODE, "id");
+        createLabelIndex(mgmt, "byObjectLabelIdProperty", OBJECT_NODE, "id");
+        createLabelIndex(mgmt, "byPredicateLabelIdProperty", PREDICATE_NODE, "id");
+        createLabelIndex(mgmt, "byListLabelIdProperty", LIST_LINK, "id");
+        createLabelIndex(mgmt, "byEvaluationLabelIdProperty", EVALUATION_LINK, "id");
+
         for (JanusGraphIndex ind : mgmt.getGraphIndexes(Vertex.class)) {
             System.out.printf("vertex index: %s%n", ind);
         }
 
         mgmt.commit();
+    }
+
+    private static void createLabelIndex(JanusGraphManagement mgmt, String indexName, String label, String key) {
+        if (mgmt.getGraphIndex(indexName) == null) {
+            mgmt
+                    .buildIndex(indexName, Vertex.class)
+                    .addKey(mgmt.getOrCreatePropertyKey(key))
+                    .indexOnly(mgmt.getOrCreateVertexLabel(label))
+                    .buildCompositeIndex();
+        }
     }
 
     @Override
