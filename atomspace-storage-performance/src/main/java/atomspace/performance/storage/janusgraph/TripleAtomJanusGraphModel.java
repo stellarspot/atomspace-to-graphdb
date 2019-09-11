@@ -55,10 +55,8 @@ public abstract class TripleAtomJanusGraphModel extends TripleJanusGraphModel {
     protected LookupNode putNode(GraphTraversalSource g, DBNode node) {
 
         GraphTraversal<Vertex, Vertex> t = g.V()
-                .hasLabel(node.type)
+                .has("type", node.type)
                 .has("id", node.id);
-
-//        System.out.printf("node type: %s%n", node.type);
 
         if (t.hasNext()) {
             return new LookupNode(true, t.next());
@@ -66,6 +64,7 @@ public abstract class TripleAtomJanusGraphModel extends TripleJanusGraphModel {
 
         Vertex vertex = g
                 .addV(node.type)
+                .property("type", node.type)
                 .property("id", node.id)
                 .property("value", node.value)
                 .next();
@@ -78,10 +77,8 @@ public abstract class TripleAtomJanusGraphModel extends TripleJanusGraphModel {
 
 
         GraphTraversal<Vertex, Vertex> t = g.V()
-                .hasLabel(link.type)
+                .has("type", link.type)
                 .has("id", link.id);
-
-//        System.out.printf("link type: %s%n", link.type);
 
         if (t.hasNext()) {
             return new LookupNode(true, t.next());
@@ -115,5 +112,4 @@ public abstract class TripleAtomJanusGraphModel extends TripleJanusGraphModel {
             this.vertex = vertex;
         }
     }
-
 }

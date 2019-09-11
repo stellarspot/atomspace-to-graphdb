@@ -66,7 +66,8 @@ public class TripleNativeJanusGraphModel extends TripleJanusGraphModel {
             Triple triple = triples.get(rand.nextInt(size));
 
             GraphTraversal<Vertex, Vertex> iter = g.V()
-                    .hasLabel(SUBJECT_NODE)
+//                    .hasLabel(SUBJECT_NODE)
+                    .has("type", SUBJECT_NODE)
                     .has("value", triple.subject)
                     .out(triple.predicate)
                     .V()

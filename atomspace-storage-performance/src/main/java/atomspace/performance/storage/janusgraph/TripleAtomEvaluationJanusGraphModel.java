@@ -55,7 +55,7 @@ public class TripleAtomEvaluationJanusGraphModel extends TripleAtomJanusGraphMod
 
             // Find ListLink vertex
             GraphTraversal<Vertex, Vertex> listLinkTraversal = g.V()
-                    .hasLabel(SUBJECT_NODE)
+                    .has("type", SUBJECT_NODE)
                     .has("value", triple.subject)
                     .out(getArgType(0))
                     .hasLabel(LIST_LINK);

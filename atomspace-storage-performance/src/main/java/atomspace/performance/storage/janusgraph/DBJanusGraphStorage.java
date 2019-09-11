@@ -7,20 +7,11 @@ import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.structure.VertexProperty;
 import org.janusgraph.core.JanusGraph;
-import org.janusgraph.core.JanusGraphEdge;
 import org.janusgraph.core.JanusGraphFactory;
-import org.janusgraph.core.JanusGraphVertex;
 import org.janusgraph.core.schema.JanusGraphIndex;
 import org.janusgraph.core.schema.JanusGraphManagement;
-import org.janusgraph.core.schema.SchemaAction;
 
 import java.util.Iterator;
-
-import static atomspace.performance.storage.janusgraph.TripleAtomJanusGraphModel.OBJECT_NODE;
-import static atomspace.performance.storage.janusgraph.TripleAtomJanusGraphModel.SUBJECT_NODE;
-import static atomspace.performance.storage.janusgraph.TripleJanusGraphModel.EVALUATION_LINK;
-import static atomspace.performance.storage.janusgraph.TripleJanusGraphModel.LIST_LINK;
-import static atomspace.performance.storage.janusgraph.TripleJanusGraphModel.PREDICATE_NODE;
 
 public class DBJanusGraphStorage implements DBStorage {
 
@@ -54,44 +45,9 @@ public class DBJanusGraphStorage implements DBStorage {
         // make indices
         JanusGraphManagement mgmt = graph.openManagement();
 
-        // Subject label + value
-        if (mgmt.getGraphIndex(BY_SUBJECT_INDEX) == null) {
-            mgmt
-                    .buildIndex(BY_SUBJECT_INDEX, Vertex.class)
-                    .addKey(mgmt.getOrCreatePropertyKey("value"))
-                    .indexOnly(mgmt.getOrCreateVertexLabel(SUBJECT_NODE))
-                    .buildCompositeIndex();
-        }
-
-        if (mgmt.getGraphIndex(BY_OBJECT_INDEX) == null) {
-            mgmt
-                    .buildIndex(BY_OBJECT_INDEX, Vertex.class)
-                    .addKey(mgmt.getOrCreatePropertyKey("value"))
-                    .indexOnly(mgmt.getOrCreateVertexLabel(OBJECT_NODE))
-                    .buildCompositeIndex();
-        }
-
-        if (mgmt.getGraphIndex(BY_TYPE_INDEX) == null) {
-            mgmt
-                    .buildIndex(BY_TYPE_INDEX, Vertex.class)
-                    .addKey(mgmt.getOrCreatePropertyKey("type"))
-                    .buildCompositeIndex();
-        }
-
-        if (mgmt.getGraphIndex(BY_TYPE_VALUE_INDEX) == null) {
-            mgmt
-                    .buildIndex(BY_TYPE_VALUE_INDEX, Vertex.class)
-                    .addKey(mgmt.getOrCreatePropertyKey("type"))
-                    .addKey(mgmt.getOrCreatePropertyKey("value"))
-                    .buildCompositeIndex();
-        }
-
-        createLabelIndex(mgmt, "byLikesLabelIdProperty", "LIKES_LINK", "id");
-        createLabelIndex(mgmt, "bySubjectLabelIdProperty", SUBJECT_NODE, "id");
-        createLabelIndex(mgmt, "byObjectLabelIdProperty", OBJECT_NODE, "id");
-        createLabelIndex(mgmt, "byPredicateLabelIdProperty", PREDICATE_NODE, "id");
-        createLabelIndex(mgmt, "byListLabelIdProperty", LIST_LINK, "id");
-        createLabelIndex(mgmt, "byEvaluationLabelIdProperty", EVALUATION_LINK, "id");
+        createKeyIndex(mgmt, "byType", "type");
+        createKeyIndex(mgmt, "byTypeAndId", "type", "id");
+        createKeyIndex(mgmt, "byTypeAndValue", "type", "value");
 
         for (JanusGraphIndex ind : mgmt.getGraphIndexes(Vertex.class)) {
             System.out.printf("vertex index: %s%n", ind);
@@ -100,13 +56,14 @@ public class DBJanusGraphStorage implements DBStorage {
         mgmt.commit();
     }
 
-    private static void createLabelIndex(JanusGraphManagement mgmt, String indexName, String label, String key) {
+    private static void createKeyIndex(JanusGraphManagement mgmt, String indexName, String... keys) {
         if (mgmt.getGraphIndex(indexName) == null) {
-            mgmt
-                    .buildIndex(indexName, Vertex.class)
-                    .addKey(mgmt.getOrCreatePropertyKey(key))
-                    .indexOnly(mgmt.getOrCreateVertexLabel(label))
-                    .buildCompositeIndex();
+            JanusGraphManagement.IndexBuilder builder = mgmt.buildIndex(indexName, Vertex.class);
+
+            for (String key : keys) {
+                builder = builder.addKey(mgmt.getOrCreatePropertyKey(key));
+            }
+            builder.buildCompositeIndex();
         }
     }
 
@@ -123,7 +80,7 @@ public class DBJanusGraphStorage implements DBStorage {
     }
 
     Vertex getOrCreate(GraphTraversalSource g, String label, String key, String value) {
-        GraphTraversal<Vertex, Vertex> t = g.V().hasLabel(label).has(key, value);
+        GraphTraversal<Vertex, Vertex> t = g.V().has("type", label).has(key, value);
         return t.hasNext() ? t.next() : g.addV(label).property(key, value).next();
     }
 

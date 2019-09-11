@@ -14,13 +14,9 @@ public class PerformanceSampleJanusGraph {
 
         try (DBJanusGraphStorage storage = new DBJanusGraphStorage()) {
 
-//            int N = 500;
-//            int statements = 500;
-//            int queries = 2000;
-//
-            int N = 100;
-            int statements = 50;
-            int queries = 20;
+            int N = 500;
+            int statements = 400;
+            int queries = 2;
 
 //            TripleGraph tripleGraph = TestTripleGraphs.getTripleGraph3();
             TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N, statements);
@@ -30,8 +26,7 @@ public class PerformanceSampleJanusGraph {
             TripleModel evaluationModel = new TripleAtomEvaluationJanusGraphModel(storage, tripleGraph);
 
             System.out.printf("triples: %s%n", tripleGraph.getStatistics());
-            TestTripleGraphs.runRequests(storage, queries, false, nativeModel);
-//            TestTripleGraphs.runRequests(storage, queries, false, nativeModel, predicateModel, evaluationModel);
+            TestTripleGraphs.runRequests(storage, queries, false, nativeModel, predicateModel, evaluationModel);
         }
     }
 }

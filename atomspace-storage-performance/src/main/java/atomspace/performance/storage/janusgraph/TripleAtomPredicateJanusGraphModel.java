@@ -57,7 +57,7 @@ public class TripleAtomPredicateJanusGraphModel extends TripleAtomJanusGraphMode
             Triple triple = triples.get(rand.nextInt(size));
 
             GraphTraversal<Vertex, Vertex> iter = g.V()
-                    .hasLabel(SUBJECT_NODE)
+                    .has("type", SUBJECT_NODE)
                     .has("value", triple.subject)
                     .out(getArgType(0))
                     .hasLabel(toLinkLabel(triple.predicate))
