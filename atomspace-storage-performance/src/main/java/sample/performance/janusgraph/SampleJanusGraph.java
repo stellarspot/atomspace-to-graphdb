@@ -35,19 +35,18 @@ public class SampleJanusGraph {
 //            int statements = 4;
 //            TripleGraph tripleGraph = TestTripleGraphs.getRandomTripleGraph(N, statements);
 
-//            TripleJanusGraphModel model = new TripleNativeJanusGraphModel(storage, tripleGraph);
+            TripleJanusGraphModel model = new TripleNativeJanusGraphModel(storage, tripleGraph);
 //            TripleJanusGraphModel model = new TripleAtomPredicateJanusGraphModel(storage, tripleGraph);
-            TripleJanusGraphModel model = new TripleAtomEvaluationJanusGraphModel(storage, tripleGraph);
+//            TripleJanusGraphModel model = new TripleAtomEvaluationJanusGraphModel(storage, tripleGraph);
 
 
             System.out.printf("model: %s", tripleGraph.getStatistics());
             storage.clearDB();
             model.storeTriples();
-
             storage.dump();
 
             List<String> objects = model.queryObjects(4);
-//            System.out.printf("objects: %d%n", objects.size());
+            System.out.printf("objects: %d%n", objects.size());
             for (String obj : objects) {
                 System.out.printf("Object: %s%n", obj);
             }

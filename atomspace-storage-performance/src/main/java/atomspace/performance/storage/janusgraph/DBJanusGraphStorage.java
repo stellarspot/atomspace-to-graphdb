@@ -7,13 +7,24 @@ import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.structure.VertexProperty;
 import org.janusgraph.core.JanusGraph;
+import org.janusgraph.core.JanusGraphEdge;
 import org.janusgraph.core.JanusGraphFactory;
+import org.janusgraph.core.JanusGraphVertex;
+import org.janusgraph.core.schema.JanusGraphIndex;
+import org.janusgraph.core.schema.JanusGraphManagement;
+import org.janusgraph.core.schema.SchemaAction;
 
-import java.io.IOException;
 import java.util.Iterator;
+
+import static atomspace.performance.storage.janusgraph.TripleAtomJanusGraphModel.OBJECT_NODE;
+import static atomspace.performance.storage.janusgraph.TripleAtomJanusGraphModel.SUBJECT_NODE;
 
 public class DBJanusGraphStorage implements DBStorage {
 
+    static final String BY_SUBJECT_INDEX = "bySubjectLabel";
+    static final String BY_OBJECT_INDEX = "byObjectLabel";
+    static final String BY_TYPE_INDEX = "byTypeValueProperty";
+    static final String BY_TYPE_VALUE_INDEX = "byTypeValueProperty";
 
     final JanusGraph graph;
 
@@ -25,8 +36,56 @@ public class DBJanusGraphStorage implements DBStorage {
     public DBJanusGraphStorage(String databaseDirectory) {
         graph = JanusGraphFactory.build()
                 .set("storage.backend", "berkeleyje")
-                .set("storage.directory", databaseDirectory)
+                .set("storage.directory", String.format("%s/graph", databaseDirectory))
+                .set("index.search.backend", "lucene")
+                .set("index.search.directory", String.format("%s/index", databaseDirectory))
                 .open();
+
+
+        makeIndices();
+    }
+
+    private void makeIndices() {
+        // make indices
+        JanusGraphManagement mgmt = graph.openManagement();
+
+        // Subject label + value
+        if (mgmt.getGraphIndex(BY_SUBJECT_INDEX) == null) {
+            mgmt
+                    .buildIndex(BY_SUBJECT_INDEX, Vertex.class)
+                    .addKey(mgmt.getOrCreatePropertyKey("value"))
+                    .indexOnly(mgmt.getOrCreateVertexLabel(SUBJECT_NODE))
+                    .buildCompositeIndex();
+        }
+
+        if (mgmt.getGraphIndex(BY_OBJECT_INDEX) == null) {
+            mgmt
+                    .buildIndex(BY_OBJECT_INDEX, Vertex.class)
+                    .addKey(mgmt.getOrCreatePropertyKey("value"))
+                    .indexOnly(mgmt.getOrCreateVertexLabel(OBJECT_NODE))
+                    .buildCompositeIndex();
+        }
+
+        if (mgmt.getGraphIndex(BY_TYPE_INDEX) == null) {
+            mgmt
+                    .buildIndex(BY_TYPE_INDEX, Vertex.class)
+                    .addKey(mgmt.getOrCreatePropertyKey("type"))
+                    .buildCompositeIndex();
+        }
+
+        if (mgmt.getGraphIndex(BY_TYPE_VALUE_INDEX) == null) {
+            mgmt
+                    .buildIndex(BY_TYPE_VALUE_INDEX, Vertex.class)
+                    .addKey(mgmt.getOrCreatePropertyKey("type"))
+                    .addKey(mgmt.getOrCreatePropertyKey("value"))
+                    .buildCompositeIndex();
+        }
+
+        for (JanusGraphIndex ind : mgmt.getGraphIndexes(Vertex.class)) {
+            System.out.printf("vertex index: %s%n", ind);
+        }
+
+        mgmt.commit();
     }
 
     @Override

@@ -33,11 +33,16 @@ public class TripleNativeJanusGraphModel extends TripleJanusGraphModel {
         GraphTraversalSource g = storage.graph.traversal();
 
         try (Transaction tx = g.tx()) {
-
             for (Triple triple : tripleGraph.getTriples()) {
 
-                Vertex sbj = storage.getOrCreate(g, SUBJECT_LABEL, "value", triple.subject);
-                Vertex obj = storage.getOrCreate(g, OBJECT_LABEL, "value", triple.object);
+                Vertex sbj = storage.getOrCreate(g, SUBJECT_NODE, "value", triple.subject);
+                // to use indices
+                sbj.property("type", SUBJECT_NODE);
+
+                Vertex obj = storage.getOrCreate(g, OBJECT_NODE, "value", triple.object);
+                // to use indices
+                obj.property("type", OBJECT_NODE);
+
                 sbj.addEdge(triple.predicate, obj);
             }
             tx.commit();
@@ -61,9 +66,12 @@ public class TripleNativeJanusGraphModel extends TripleJanusGraphModel {
             Triple triple = triples.get(rand.nextInt(size));
 
             GraphTraversal<Vertex, Vertex> iter = g.V()
-                    .hasLabel(SUBJECT_LABEL)
+                    .hasLabel(SUBJECT_NODE)
                     .has("value", triple.subject)
-                    .out(triple.predicate).V().hasLabel(OBJECT_LABEL);
+                    .out(triple.predicate)
+                    .V()
+                    // to use indices
+                    .has("type", OBJECT_NODE);
 
             if (iter.hasNext()) {
                 objects.add(iter.next().value("value"));

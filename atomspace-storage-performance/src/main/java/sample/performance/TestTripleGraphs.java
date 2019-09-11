@@ -57,11 +57,12 @@ public class TestTripleGraphs {
         Map<String, Double> createTimeMap = new HashMap<>();
         Map<String, Double> queryTimeMap = new HashMap<>();
 
+        // warmup
         for (TripleModel model : models) {
             storage.clearDB();
             model.storeTriples();
             List<String> objects = model.queryObjects(queries);
-            totalObjects += objects.size();
+            objects.size();
         }
 
         for (TripleModel model : models) {

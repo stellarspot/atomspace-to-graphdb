@@ -15,13 +15,6 @@ import java.util.Random;
 public class TripleAtomEvaluationJanusGraphModel extends TripleAtomJanusGraphModel {
 
 
-    private static final String EVALUAION_LINK = "Evaluation";
-    private static final String LIST_LINK = "List";
-    private static final String PREDICATE_NODE = "PredicateNode";
-    private static final String SUBJECT_NODE = "SubjectNode";
-    private static final String OBJECT_NODE = "ObjectNode";
-
-
     public TripleAtomEvaluationJanusGraphModel(TripleGraph tripleGraph) {
         super(tripleGraph);
     }
@@ -37,7 +30,7 @@ public class TripleAtomEvaluationJanusGraphModel extends TripleAtomJanusGraphMod
 
     @Override
     protected DBAtom toAtom(Triple triple) {
-        return atomspace.getLink(EVALUAION_LINK,
+        return atomspace.getLink(EVALUATION_LINK,
                 atomspace.getNode(PREDICATE_NODE, triple.predicate),
                 atomspace.getLink(LIST_LINK,
                         atomspace.getNode(SUBJECT_NODE, triple.subject),
@@ -62,7 +55,7 @@ public class TripleAtomEvaluationJanusGraphModel extends TripleAtomJanusGraphMod
 
             // Find ListLink vertex
             GraphTraversal<Vertex, Vertex> listLinkTraversal = g.V()
-                    .hasLabel(SUBJECT_LABEL)
+                    .hasLabel(SUBJECT_NODE)
                     .has("value", triple.subject)
                     .out(getArgType(0))
                     .hasLabel(LIST_LINK);
@@ -74,7 +67,7 @@ public class TripleAtomEvaluationJanusGraphModel extends TripleAtomJanusGraphMod
                 // Find PredicateNode vertex
                 GraphTraversal<Vertex, Vertex> predicateNodeTraversal = g.V(listLink.id())
                         .out(getArgType(1))
-                        .hasLabel(EVALUAION_LINK)
+                        .hasLabel(EVALUATION_LINK)
                         .in(getArgType(0))
                         .hasLabel(PREDICATE_NODE)
                         .property("value", triple.predicate);
