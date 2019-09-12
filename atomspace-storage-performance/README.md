@@ -290,15 +290,24 @@ Query time (ms):
 
 ## Conclusion
 
-Atomspace shows linear dependency for atoms creation and query execution in Predicate and Evaluation
-models.
+The current conclusion does not include Neo4j with Cypher measurements
+because they showed worse result as Neo4j with Java API.
 
-Cypher QL for Neo4j heavily relates on created indices which can improve creation and query execution time.
-Creation time is linearly dependent on the number of chosen statements for all models with the given indices.
-Query time for evaluation model shows degradation over number of queries.
-It should be mention that may be it is possible to choose another indices that can improve the query results.
+![Compare create requests](docs/images/perf/time_create_compare.png)
 
+All three storages AtomSpace, Neo4j with Java API, and JanusGraph shows nearly linear
+time dependency for atoms creation in Native, Predicate and Evaluation models.  
 
-Java API for Neo4j shows linear dependency both for creation and query execution time for all models.
-It is because Java API allows to reuse created nodes and link for parent link creation instead of querying
-them again as in the case of Cypher QL.
+However, the creation time different is for each model.
+AtomsSpace is the fastest one just because it stores all data in memory.
+
+The difference between time creation for Neo4j and JanusGaph needs to be further investigated.
+Both storages were deployed locally and they should be able to properly cache their data.
+
+![Compare query requests](docs/images/perf/time_query_compare.png)
+
+The similar conclusion is for query requests.
+
+Note that the current work does not emulate incoming set creation and traversing
+which has additional impact on creation and query time. This should be investigated
+in additional work.
