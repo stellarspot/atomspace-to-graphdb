@@ -97,7 +97,7 @@ Create time (ms)
 |Predicate |3.34   |7.87   |10.57  |14.36  |
 |Evaluation|5.61   |10.19  |15.44  |18.73  |
 
-![Atomspace time create](docs/images/perf/time_create_atomspace.png)
+![Atomspace time create](docs/images/perf/time_create_atomspace_small.png)
 
 Number in columns is the number of queries.
 Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
@@ -110,7 +110,7 @@ Query time (ms):
 |Predicate |74    |162   |240  |325  |
 |Evaluation|105   |200   |331  |399  |
 
-![Atomspace time query](docs/images/perf/time_query_atomspace.png)
+![Atomspace time query](docs/images/perf/time_query_atomspace_small.png)
 
 ## Neo4j
 
@@ -208,7 +208,7 @@ Create time (ms)
 |Predicate |24     |48     |66     |84     |
 |Evaluation|42     |76     |112    |138    |
 
-![Neo4j create requests](docs/images/perf/time_create_neo4j_cypher.png)
+![Neo4j create requests](docs/images/perf/time_create_neo4j_cypher_small.png)
 
 
 Number in columns is the number of queries.
@@ -224,7 +224,7 @@ Query time (ms):
 |Evaluation|645   |1286  |1937 |2543|
 
 
-![Neo4j query requests](docs/images/perf/time_query_neo4j_cypher.png)
+![Neo4j query requests](docs/images/perf/time_query_neo4j_cypher_small.png)
 
 ### Creation and query performance using Java API
 
@@ -239,7 +239,7 @@ Create time (ms)
 |Predicate |15     |32     |50     |60     |
 |Evaluation|25     |53     |93     |128    |
 
-![Neo4j create requests](docs/images/perf/time_create_neo4j_api.png)
+![Neo4j create requests](docs/images/perf/time_create_neo4j_api_small.png)
 
 Number in columns is the number of queries.
 Parameter N is 500 (number of subjects 500, objects 500, predicates 125).
@@ -253,7 +253,7 @@ Query time (ms):
 |Predicate |64    |142   |213  |269  |
 |Evaluation|69    |151   |219  |287  |
 
-![Neo4j query requests](docs/images/perf/time_query_neo4j_api.png)
+![Neo4j query requests](docs/images/perf/time_query_neo4j_api_small.png)
 
 
 ## JanusGraph
@@ -271,7 +271,7 @@ Create time (ms)
 |Predicate |160    |467    |824    |1242   |
 |Evaluation|235    |665    |1187   |1782   |
 
-![JanusGraph create requests](docs/images/perf/time_create_janusgraph.png)
+![JanusGraph create requests](docs/images/perf/time_create_janusgraph_small.png)
 
 
 Number in columns is the number of queries.
@@ -286,7 +286,7 @@ Query time (ms):
 |Predicate |69    |111   |156  |195  |
 |Evaluation|199   |365   |513  |635  |
 
-![JanusGraph query requests](docs/images/perf/time_query_janusgraph.png)
+![JanusGraph query requests](docs/images/perf/time_query_janusgraph_small.png)
 
 ## Conclusion
 
