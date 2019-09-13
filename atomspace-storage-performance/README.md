@@ -307,10 +307,10 @@ Both storages were deployed locally and they should be able to properly cache th
 The query requests also are described nearly linear time dependency.
 
 The Evaluation model for JanusGraph shows significant time increasing for larger number requests.
-The similar results are showed by the Neo4j with Cypher query requests.
+The similar results are shown by the Neo4j with Cypher query requests.
 Reasonable explanation could be that query requests for Native and Predicate models require
 only one path traversal whereas Evaluation model contains fork when it is necessary to
-check both paths to predicate and to object nodes.
+check both paths to predicate and object nodes.
 
 It should be noted that the current work does not emulate incoming set creation and traversing
 through it as it is used by pattern matcher in AtomSpace. Incoming set emulation
