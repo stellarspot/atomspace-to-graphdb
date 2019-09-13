@@ -290,15 +290,12 @@ Query time (ms):
 
 ## Conclusion
 
-The current conclusion does not include Neo4j with Cypher measurements
-because they showed worse result as Neo4j with Java API.
-
 ![Compare create requests](docs/images/perf/time_create_compare.png)
 
-All three storages AtomSpace, Neo4j with Java API, and JanusGraph shows nearly linear
+All three storages AtomSpace, Neo4j with Java API, and JanusGraph show nearly linear
 time dependency for atoms creation in Native, Predicate and Evaluation models.  
 
-However, the creation time different is for each model.
+However, the creation time is different for each model.
 AtomsSpace is the fastest one just because it stores all data in memory.
 
 The difference between time creation for Neo4j and JanusGaph needs to be further investigated.
@@ -306,8 +303,15 @@ Both storages were deployed locally and they should be able to properly cache th
 
 ![Compare query requests](docs/images/perf/time_query_compare.png)
 
-The similar conclusion is for query requests.
 
-Note that the current work does not emulate incoming set creation and traversing
-which has additional impact on creation and query time. This should be investigated
-in additional work.
+The query requests also are described nearly linear time dependency.
+
+The Evaluation model for JanusGraph shows significant time increasing for larger number requests.
+The similar results are showed by the Neo4j with Cypher query requests.
+Reasonable explanation could be that query requests for Native and Predicate models require
+only one path traversal whereas Evaluation model contains fork when it is necessary to
+check both paths to predicate and to object nodes.
+
+It should be noted that the current work does not emulate incoming set creation and traversing
+through it as it is used by pattern matcher in AtomSpace. Incoming set emulation
+can introduce additional impact on both for data creation and query time performance.
